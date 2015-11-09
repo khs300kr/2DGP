@@ -10,98 +10,71 @@ class Monster:
 
     TIME_PER_ACTION = 0.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
-    FRAMES_PER_ACTION = 4
+    FRAMES_PER_ACTION = 3
 
     image = None
-    jump = None
-    attack = None
-
-    R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
+    hit = None
+    die = None
 
     def __init__(self):
-        self.x = 100
+        self.x = 1200
         self.y = 145
         self.life_time = 0.0
         self.total_frames = 0.0
         self.frame = 0
-        self.dir = 0
-        self.state = self.R_STAND
-        #jump
+        self.dir = -1
+        #hit
         self.j_time = 0
-        self.b_jump = False
-        self.frame_jump = 0
-        #attack
+        self.b_hit = False
+        self.frame_hit = 0
+        #die
         self.a_time = 0
-        self.b_attack = False
-        self.frame_attack = 0
+        self.b_die = False
+        self.frame_die = 0
 
-        if Character.image == None:
-            Character.image = load_image('Resource/Character/Moving.png')
-        if Character.jump == None:
-            Character.jump = load_image('Resource/Character/jump.png')
-        if Character.attack == None:
-            Character.attack = load_image('Resource/Character/attack.png')
+        if Monster.image == None:
+            Monster.image = load_image('Resource/Monster/Sheep/sheep_run.png')
+        if Monster.hit == None:
+            Monster.hit = load_image('Resource/Monster/Sheep/sheep_hit.png')
+        if Monster.die == None:
+            Monster.die = load_image('Resource/Monster/Sheep/sheep_die.png')
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
         self.life_time += frame_time
-        distance = Character.RUN_SPEED_PPS * frame_time
-        self.total_frames += Character.FRAMES_PER_ACTION * Character.ACTION_PER_TIME * frame_time
-        self.frame = int(self.total_frames) % 4
+        distance = Monster.RUN_SPEED_PPS * frame_time
+        self.total_frames += Monster.FRAMES_PER_ACTION * Monster.ACTION_PER_TIME * frame_time
+        self.frame = int(self.total_frames) % 3
         self.x += (self.dir * distance)
-
         self.x = clamp(0, self.x, 2048)
 
-        if self.b_jump == True:
-            self.j_time += 0.5
-            self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
-            if self.y <= 145:
-                self.j_time = 0
-                self.b_jump = False
-                self.y = 145
-        if self.b_attack == True:
-            self.a_time += 0.5
-            if self.a_time >= 2:
-                self.a_time = 0
-                self.b_attack = False
+        #if self.b_hit == True:
+            #self.j_time += 0.5
+            #self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
+            #if self.y <= 145:
+             #   self.j_time = 0
+              #  self.b_jump = False
+              #  self.y = 145
+           # pass
+       # if self.b_die == True:
+           # self.a_time += 0.5
+           # if self.a_time >= 2:
+               # self.a_time = 0
+                #self.b_attack = False
+           # pass
 
         delay(0.04)
 
     def draw(self):
-        if self.b_jump == True:
-            self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.x,self.y)
-        elif self.b_attack == True:
-            self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.x, self.y)
+        if self.b_hit == True:
+            self.hit.clip_draw(0,65, 100, 100, self.x,self.y)
+       # elif self.b_die == True:
+            #pass
+           # self.die.clip_draw(self.frame_die * 100,65 , 100 ,100 ,self.x, self.y)
         else:
-            self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100, self.x, self.y)
-
-    def handle_event(self,event):
-        if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
-            if self.state in (self.R_STAND, self.L_STAND, self.R_WALK):
-                self.state = self.L_WALK
-                self.dir = -1
-                self.frame_jump = 1
-                self.frame_attack = 1
-        elif (event.type, event.key) == (SDL_KEYDOWN, SDLK_RIGHT):
-            if self.state in (self.R_STAND, self.L_STAND, self.L_WALK):
-                self.state = self.R_WALK
-                self.dir = 1
-                self.frame_jump = 0
-                self.frame_attack = 0
-        elif (event.type, event.key) == (SDL_KEYUP, SDLK_LEFT):
-            if self.state in (self.L_WALK,):
-                self.state = self.L_STAND
-                self.dir = 0
-        elif (event.type, event.key) == (SDL_KEYUP, SDLK_RIGHT):
-            if self.state in (self.R_WALK,):
-                self.state = self.R_STAND
-                self.dir = 0
-        elif event.key == SDLK_c:
-                self.b_jump = True
-        elif event.key == SDLK_x:
-                self.b_attack = True
+            self.image.clip_draw(self.frame * 100, 65, 100, 100, self.x, self.y)
 
     def get_bb(self):
         return self.x - 40, self.y - 50, self.x + 10, self.y + 50

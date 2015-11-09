@@ -6,6 +6,7 @@ import title_state
 
 from pico2d import *
 from Character import Character
+from Monster import Monster
 from Stage import Floor
 from Stage import Background
 
@@ -15,17 +16,22 @@ character = None
 floor = None
 background = None
 bullet = None
+monster = None
+
+
 
 
 def create_game():
-    global character, floor, background
+    global character, floor, background, monster
     character = Character()
+    monster = Monster()
     floor = Floor(1024,600)
     background = Background(1024,600)
 
 
 def destroy_game():
-    global character, floor, background
+    global character, floor, background, monster
+    del(monster)
     del(character)
     del(floor)
     del(background)
@@ -33,10 +39,6 @@ def destroy_game():
 
 def enter():
     create_game()
-
-
-def exit():
-    destroy_game()
 
 
 def pause():
@@ -60,18 +62,9 @@ def handle_events(frame_time):
                 floor.handle_event(event)
 
 
-def collide(a,b):
-    left_a,bottom_a,right_a,top_a = a.get_bb()
-    left_b,bottom_b,right_b,top_b = b.get_bb()
-    if left_a > right_b : return False
-    if right_a < left_b : return False
-    if top_a < bottom_b : return False
-    if bottom_a > top_b : return False
-    return True
-
-
 def update(frame_time):
     character.update(frame_time)
+    monster.update(frame_time)
     background.update(frame_time)
     floor.update(frame_time)
 
@@ -86,4 +79,20 @@ def draw(frame_time):
     floor.draw_bb()
     character.draw_bb()
     character.draw()
+    monster.draw()
+    monster.draw_bb()
     update_canvas()
+
+
+def collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_bb()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+
+
+def exit():
+    destroy_game()

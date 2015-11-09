@@ -28,14 +28,14 @@ class TestGameState:
     def resume(self):
         print("State [%s] Resumed" % self.name)
 
-    def handle_events(self):
-        print("State [%s] handle_events" % self.name)
+    def handle_events(self, frame_time):
+        print("State [%s] handle_events(%f)" % (self.name, frame_time))
 
-    def update(self):
-        print("State [%s] update" % self.name)
+    def update(self, frame_time):
+        print("State [%s] update(%f)" % (self.name, frame_time))
 
-    def draw(self):
-        print("State [%s] draw" % self.name)
+    def draw(self, frame_time):
+        print("State [%s] draw(%f)" % (self.name, frame_time))
 
 
 running = None
@@ -83,9 +83,9 @@ def run(start_state):
     running = True
     stack = [start_state]
     start_state.enter()
-    current_time = time.clock()
+    current_time = time.time()
     while (running):
-        frame_time = time.clock() - current_time
+        frame_time = time.time() - current_time
         current_time += frame_time
         stack[-1].handle_events(frame_time)
         stack[-1].update(frame_time)

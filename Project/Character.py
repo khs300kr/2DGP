@@ -52,16 +52,16 @@ class Character:
         self.frame = int(self.total_frames) % 4
         self.x += (self.dir * distance)
 
-        self.x = clamp(0, self.x, 2048)
+        self.x = clamp(0, self.x, 1024)
 
-        if self.b_jump == True:
+        if self.b_jump == 1:
             self.j_time += 0.5
             self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
             if self.y <= 145:
                 self.j_time = 0
                 self.b_jump = False
                 self.y = 145
-        if self.b_attack == True:
+        if self.b_attack == 1:
             self.a_time += 0.5
             if self.a_time >= 2:
                 self.a_time = 0
@@ -70,9 +70,9 @@ class Character:
         delay(0.04)
 
     def draw(self):
-        if self.b_jump == True:
+        if self.b_jump == 1:
             self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.x,self.y)
-        elif self.b_attack == True:
+        elif self.b_attack == 1:
             self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.x, self.y)
         else:
             self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100, self.x, self.y)

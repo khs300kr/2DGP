@@ -15,7 +15,6 @@ def exit():
     global image
     del(image)
 
-
 def handle_events(frame_time):
     events = get_events()
     for event in events:

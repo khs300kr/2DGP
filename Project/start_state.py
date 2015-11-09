@@ -11,7 +11,7 @@ logo_time = 0.0
 
 def enter():
     global image
-    open_canvas(1024,600)
+    open_canvas(1024,600,sync=True)
     game_framework.reset_time()
     image = load_image('Resource/State/kpu_credit.png')
 
@@ -19,7 +19,6 @@ def enter():
 def exit():
     global image
     del(image)
-    close_canvas()
 
 
 def update(frame_time):
