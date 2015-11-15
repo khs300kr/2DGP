@@ -8,7 +8,7 @@ class Monster:
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    TIME_PER_ACTION = 0.5
+    TIME_PER_ACTION = 0.8
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 3
 
@@ -18,8 +18,8 @@ class Monster:
 
     def __init__(self):
         self.x = 1200
-        self.y = 145
-        self.life_time = 0.0
+        self.y = 125
+        self.speed = 300
         self.total_frames = 0.0
         self.frame = 0
         self.dir = -1
@@ -43,12 +43,10 @@ class Monster:
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
-        self.life_time += frame_time
-        distance = Monster.RUN_SPEED_PPS * frame_time
         self.total_frames += Monster.FRAMES_PER_ACTION * Monster.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 3
-        self.x += (self.dir * distance)
-        self.x = clamp(0, self.x, 2048)
+        self.x -= frame_time * self.speed
+        self.x = clamp(100, self.x, 2048)
 
         #if self.b_hit == True:
             #self.j_time += 0.5
@@ -65,7 +63,6 @@ class Monster:
                 #self.b_attack = False
            # pass
 
-        delay(0.04)
 
     def draw(self):
         if self.b_hit == True:
@@ -74,10 +71,10 @@ class Monster:
             #pass
            # self.die.clip_draw(self.frame_die * 100,65 , 100 ,100 ,self.x, self.y)
         else:
-            self.image.clip_draw(self.frame * 100, 65, 100, 100, self.x, self.y)
+            self.image.clip_draw(self.frame * 100,0, 100, 65, self.x, self.y)
 
     def get_bb(self):
-        return self.x - 40, self.y - 50, self.x + 10, self.y + 50
+        return self.x - 40, self.y - 30, self.x + 30, self.y + 20
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())

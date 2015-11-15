@@ -1,4 +1,5 @@
 import time
+from pico2d import *
 
 
 class GameState:
@@ -49,14 +50,12 @@ def change_state(state):
     state.enter()
 
 
-
 def push_state(state):
     global stack
     if (len(stack) > 0):
         stack[-1].pause()
     stack.append(state)
     state.enter()
-
 
 
 def pop_state():
@@ -72,7 +71,6 @@ def pop_state():
         stack[-1].resume()
 
 
-
 def quit():
     global running
     running = False
@@ -83,13 +81,16 @@ def run(start_state):
     running = True
     stack = [start_state]
     start_state.enter()
-    current_time = time.time()
+    current_time = get_time()
     while (running):
-        frame_time = time.time() - current_time
+        frame_time = get_time() - current_time
         current_time += frame_time
-        stack[-1].handle_events(frame_time)
+        #frame_rate = 1.0 / frame_time
+       # print("Frame Time: %f sec ," %(frame_time))
+
         stack[-1].update(frame_time)
         stack[-1].draw(frame_time)
+        stack[-1].handle_events(frame_time)
     # repeatedly delete the top of the stack
     while (len(stack) > 0):
         stack[-1].exit()
@@ -99,6 +100,7 @@ def run(start_state):
 def reset_time():
     global current_time
     current_time = time.clock()
+
 
 def test_game_framework():
     start_state = TestGameState('StartState')

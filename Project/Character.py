@@ -2,13 +2,13 @@ from pico2d import *
 
 
 class Character:
-    PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
+    PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
     RUN_SPEED_KMPH = 20.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    TIME_PER_ACTION = 0.5
+    TIME_PER_ACTION = 1.0
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
 
@@ -19,6 +19,8 @@ class Character:
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
 
     def __init__(self):
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
         self.x = 100
         self.y = 145
         self.life_time = 0.0
@@ -52,30 +54,33 @@ class Character:
         self.frame = int(self.total_frames) % 4
         self.x += (self.dir * distance)
 
-        self.x = clamp(0, self.x, 1024)
+        self.x = clamp(0 + 40, self.x, 2048 - 40)
 
         if self.b_jump == 1:
-            self.j_time += 0.5
+            self.j_time += 0.3
             self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
             if self.y <= 145:
                 self.j_time = 0
                 self.b_jump = False
                 self.y = 145
         if self.b_attack == 1:
-            self.a_time += 0.5
+            self.a_time += 0.2
             if self.a_time >= 2:
                 self.a_time = 0
                 self.b_attack = False
 
-        delay(0.04)
-
     def draw(self):
+        x_left_offset = min(0,self.x-self.canvas_width//2)
+        x_right_offset = max(0,self.x - self.bg.w + self.canvas_width//2)
+        x_offset = x_left_offset + x_right_offset
+
         if self.b_jump == 1:
-            self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.x,self.y)
+            self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.canvas_width//2+x_offset,self.y)
         elif self.b_attack == 1:
-            self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.x, self.y)
+            self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.canvas_width//2+x_offset, self.y)
         else:
-            self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100, self.x, self.y)
+            self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100,self.canvas_width//2+x_offset,
+                                 self.y)
 
     def handle_event(self,event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
@@ -98,16 +103,22 @@ class Character:
             if self.state in (self.R_WALK,):
                 self.state = self.R_STAND
                 self.dir = 0
-        elif event.key == SDLK_c:
+        elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_c):
                 self.b_jump = True
-        elif event.key == SDLK_x:
+        elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_x):
                 self.b_attack = True
 
     def get_bb(self):
-        return self.x - 40, self.y - 50, self.x + 10, self.y + 50
+        x_left_offset = min(0,self.x-self.canvas_width//2)
+        x_right_offset = max(0,self.x - self.bg.w + self.canvas_width//2)
+        x_offset = x_left_offset + x_right_offset
+        return self.canvas_width//2+x_offset - 40, self.y - 50, self.canvas_width//2+x_offset + 10, self.y + 40
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
 
+    def knockback(self):
+        self.x -= 20
 
-
+    def set_floor(self,bg):
+        self.bg = bg

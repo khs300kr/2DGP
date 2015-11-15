@@ -19,17 +19,17 @@ bullet = None
 monster = None
 
 
-
-
-def create_game():
+def create_world():
     global character, floor, background, monster
     character = Character()
     monster = Monster()
-    floor = Floor(1024,600)
+    floor = Floor()
     background = Background(1024,600)
+    floor.set_center_object(character)
+    character.set_floor(floor)
 
 
-def destroy_game():
+def destroy_world():
     global character, floor, background, monster
     del(monster)
     del(character)
@@ -37,12 +37,18 @@ def destroy_game():
     del(background)
 
 
+
 def enter():
-    create_game()
+    create_world()
+
+
+def exit():
+    destroy_world()
 
 
 def pause():
     pass
+
 
 def resume():
     pass
@@ -63,14 +69,16 @@ def handle_events(frame_time):
 
 
 def update(frame_time):
-    character.update(frame_time)
-    monster.update(frame_time)
+    global character, floor, background, monster
     background.update(frame_time)
     floor.update(frame_time)
+    character.update(frame_time)
+    monster.update(frame_time)
 
-    if collide(character,floor):
-        print("collision")
+    if collide(character,monster):
+        character.knockback()
 
+    delay(0.015)
 
 def draw(frame_time):
     clear_canvas()
@@ -93,6 +101,3 @@ def collide(a,b):
     if bottom_a > top_b : return False
     return True
 
-
-def exit():
-    destroy_game()
