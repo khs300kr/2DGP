@@ -5,29 +5,30 @@ import game_framework
 import title_state
 
 from pico2d import *
-from Character import Character
-from Monster import Monster
-from Stage import Floor
-from Stage import Background
+from Character import *
+from Monster import *
+from Stage import *
+from Bullet import *
 
 name = "MainState"
 
 character = None
+bullet = None
 floor = None
 background = None
-bullet = None
+bullets = None
 monster = None
 
 
 def create_world():
-    global character, floor, background, monster
+    global character, floor, background, monster, bullets, bullet
     character = Character()
     monster = Monster()
     floor = Floor()
     background = Background(1024,600)
     floor.set_center_object(character)
     character.set_floor(floor)
-
+    bullets = list()
 
 def destroy_world():
     global character, floor, background, monster
@@ -36,6 +37,10 @@ def destroy_world():
     del(floor)
     del(background)
 
+
+def shooting():
+    global bullets
+    bullets.append(Bullet(character.x,character.y,character.state,floor))
 
 
 def enter():
@@ -58,38 +63,16 @@ def handle_events(frame_time):
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
-            exit()
+            game_framework.quit()
         else:
-            if (event.type,SDL_KEYDOWN) == (event.key,SDLK_ESCAPE):
-                exit()
+            if (event.type,event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
+                game_framework.quit()
             else:
                 character.handle_event(event)
+                if character.b_attack == True:
+                    shooting()
                 background.handle_event(event)
                 floor.handle_event(event)
-
-
-def update(frame_time):
-    global character, floor, background, monster
-    background.update(frame_time)
-    floor.update(frame_time)
-    character.update(frame_time)
-    monster.update(frame_time)
-
-    if collide(character,monster):
-        character.knockback()
-
-    delay(0.015)
-
-def draw(frame_time):
-    clear_canvas()
-    background.draw()
-    floor.draw()
-    floor.draw_bb()
-    character.draw_bb()
-    character.draw()
-    monster.draw()
-    monster.draw_bb()
-    update_canvas()
 
 
 def collide(a,b):
@@ -100,4 +83,38 @@ def collide(a,b):
     if top_a < bottom_b : return False
     if bottom_a > top_b : return False
     return True
+
+
+def update(frame_time):
+    global bullets
+
+    background.update(frame_time)
+    floor.update(frame_time)
+    character.update(frame_time)
+    monster.update(frame_time)
+
+    for bullet in bullets:
+        bullet.update(frame_time)
+        if bullet.x > 2048:
+            bullets.remove(bullet)
+
+    if collide(character,monster):
+        character.knockback()
+
+    delay(0.010)
+
+def draw(frame_time):
+    clear_canvas()
+    background.draw()
+    floor.draw()
+    floor.draw_bb()
+    character.draw()
+    character.draw_bb()
+    monster.draw()
+    monster.draw_bb()
+
+    for bullet in bullets:
+        bullet.draw()
+        bullet.draw_bb()
+    update_canvas()
 

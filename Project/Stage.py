@@ -2,7 +2,7 @@ from pico2d import *
 
 class Background:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
-    SCROLL_SPEED_KMPH = 20.0                    # Km / Hour
+    SCROLL_SPEED_KMPH = 10.0                    # Km / Hour
     SCROLL_SPEED_MPM = (SCROLL_SPEED_KMPH * 1000.0 / 60.0)
     SCROLL_SPEED_MPS = (SCROLL_SPEED_MPM / 60.0)
     SCROLL_SPEED_PPS = (SCROLL_SPEED_MPS * PIXEL_PER_METER)
@@ -48,11 +48,7 @@ class Floor:
         self.set_center_object = character
 
     def draw(self):
-         # x = int(self.left)
-         # w = min(self.image.w - x, self.canvas_width)
-         # self.image.clip_draw_to_origin(x,0,1024,self.canvas_height,0,0)
-         # self.image.clip_draw_to_origin(0,0,self.canvas_width-1024,self.canvas_height,1024,0)
-          self.image.clip_draw_to_origin(self.left,0,self.canvas_width ,self.canvas_height,0,0)
+        self.image.clip_draw_to_origin(self.left,0,self.canvas_width ,self.canvas_height,0,0)
 
     def update(self,frame_time):
         self.left = clamp(0,int(self.set_center_object.x ) - self.canvas_width//2, self.w - self.canvas_width)
@@ -65,10 +61,4 @@ class Floor:
     
     def handle_event(self, event):
         pass
-        # if event.type == SDL_KEYDOWN:
-        #     if event.key == SDLK_LEFT: self.speed -= Floor.SCROLL_SPEED_PPS
-        #     elif event.key == SDLK_RIGHT: self.speed += Floor.SCROLL_SPEED_PPS
-        # if event.type == SDL_KEYUP:
-        #     if event.key == SDLK_LEFT: self.speed += Floor.SCROLL_SPEED_PPS
-        #     elif event.key == SDLK_RIGHT: self.speed -= Floor.SCROLL_SPEED_PPS
 

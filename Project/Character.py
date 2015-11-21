@@ -1,5 +1,5 @@
 from pico2d import *
-
+from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
@@ -57,8 +57,8 @@ class Character:
         self.x = clamp(0 + 40, self.x, 2048 - 40)
 
         if self.b_jump == 1:
-            self.j_time += 0.3
-            self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
+            self.j_time += 0.2
+            self.y -= -10 + (0.98 * self.j_time * self.j_time) / 2
             if self.y <= 145:
                 self.j_time = 0
                 self.b_jump = False
@@ -74,9 +74,9 @@ class Character:
         x_right_offset = max(0,self.x - self.bg.w + self.canvas_width//2)
         x_offset = x_left_offset + x_right_offset
 
-        if self.b_jump == 1:
+        if self.b_jump == True:
             self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.canvas_width//2+x_offset,self.y)
-        elif self.b_attack == 1:
+        elif self.b_attack == True:
             self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.canvas_width//2+x_offset, self.y)
         else:
             self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100,self.canvas_width//2+x_offset,
@@ -122,3 +122,8 @@ class Character:
 
     def set_floor(self,bg):
         self.bg = bg
+
+
+
+
+
