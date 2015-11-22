@@ -21,7 +21,7 @@ yangs = None
 
 def create_world():
     global character, floor, background, bullets , yangs
-    character = Character(95)
+    character = Character()
     yangs = create_sheep();
     floor = Floor()
     background = Background(1024,600)
@@ -85,19 +85,68 @@ def collide(a,b):
     if top_a < bottom_b : return False
     if bottom_a > top_b : return False
     return True
-
+def stagecc_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_cc()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def stagedd_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_dd()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def stageee_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_ee()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def stageff_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_ff()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
 
 def update(frame_time):
-    #global bullets, yangs
-
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
 
+    if collide(character,floor) and stagecc_collide(character,floor): #b,c
+        character.floor_doublecollide_b_c()
+    elif collide(character,floor): #b
+        character.floor_collidebb()
+    if stagecc_collide(character,floor) and stagedd_collide(character,floor): #c,d
+        character.floor_doublecollide_c_d()
+    elif stagecc_collide(character,floor): #c
+        character.floor_collidecc()
+    if stagedd_collide(character,floor) and stageee_collide(character,floor): #d,e
+        character.floor_doublecollide_d_e()
+    elif stagedd_collide(character,floor): #d
+        character.floor_collidedd()
+    elif stageee_collide(character,floor): #e
+        character.floor_collidecc()
+    if stageee_collide(character,floor) and stageff_collide(character,floor): #e,f
+        character.floor_doublecollide_e_f()
+
+    elif stageff_collide(character,floor): #f
+        character.floor_collideff()
+
     for yang in yangs:
         yang.update(frame_time)
         if collide(character,yang):
-            character.knockback()
+            character.die()
         if yang.life_flag == False:
             yangs.remove(yang)
 
@@ -110,7 +159,6 @@ def update(frame_time):
                     bullets.remove(bullet)
                 if yang.hp <= 0:
                     yang.death()
-
 
         if bullet.sx >= bullet.canvas_width:
                 bullets.remove(bullet)

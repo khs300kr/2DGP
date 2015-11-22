@@ -38,6 +38,7 @@ class Floor:
         self.image = load_image('Resource/Map/Stage1.png')
         self.speed = 0
         self.left = 0
+        self.x = 0
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.w = self.image.w
@@ -55,10 +56,27 @@ class Floor:
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+        draw_rectangle(*self.get_cc())
+        draw_rectangle(*self.get_dd())
+        draw_rectangle(*self.get_ee())
+        draw_rectangle(*self.get_ff())
 
     def get_bb(self):
-        return 0,0,2047,95
-    
+        sx = self.x - self.left
+        return sx,0,sx + 2065,165
+    def get_cc(self):
+        sx = self.x - self.left
+        return 2065 + sx,0,sx + 2735,90
+    def get_dd(self):
+        sx = self.x - self.left
+        return 2735 + sx,0,sx + 3220,30
+    def get_ee(self):
+        sx = self.x - self.left
+        return 3220 + sx,0,sx + 3310,90
+    def get_ff(self):
+        sx = self.x - self.left
+        return 3310 + sx,0,sx + 3874,150
+
     def handle_event(self, event):
         pass
 

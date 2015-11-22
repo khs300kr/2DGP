@@ -1,4 +1,5 @@
 from pico2d import*
+import random
 
 
 class Sheep:
@@ -11,6 +12,7 @@ class Sheep:
     TIME_PER_ACTION = 0.8
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 3
+    FRAMES_PER_DIE = 5
 
     image = None
     hit = None
@@ -22,16 +24,18 @@ class Sheep:
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.x = 900
-        self.y = 125
+        self.y = 150
+        self.min = 0
+        self.max = 0
         self.dir = -1
         self.state = self.L_WALK
         self.life_flag = True
         # 능력치
         self.hp = 5
         self.speed = 300
-        self.total_frames = 0.0
+        self.total_frames = random.randint(0,2)
         self.frame = 0
-        self.die_frame = 0
+        self.total_die = 0.0
         self.dir = -1
         #hit
         self.h_time = 0
@@ -40,6 +44,7 @@ class Sheep:
         #die
         self.d_time = 0
         self.b_die = False
+        self.die_frame = 0
         self.frame_die = 0
 
         if Sheep.image == None:
@@ -50,22 +55,20 @@ class Sheep:
             Sheep.die = load_image('Resource/Monster/Sheep/sheep_die.png')
 
     def update(self, frame_time):
-        def clamp(minimum, x, maximum):
-            return max(minimum, min(x, maximum))
-
         self.total_frames += Sheep.FRAMES_PER_ACTION * Sheep.ACTION_PER_TIME * frame_time
+        self.total_die += Sheep.FRAMES_PER_DIE * Sheep.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 3
-        self.die_frame = int(self.total_frames) % 5
+        self.die_frame = int(self.total_die) % 5
 
         if self.b_die == False:
             self.x += frame_time * Sheep.RUN_SPEED_PPS * self.dir
 
-        if self.x < 0:
+        if self.x < self.min:
             self.dir = 1
             self.state = self.R_WALK
             self.frame_hit = 1
             self.frame_die = 1
-        elif self.x > 1000:
+        elif self.x > self.max:
             self.dir = -1
             self.state = self.L_WALK
             self.frame_hit = 0
@@ -79,7 +82,7 @@ class Sheep:
 
         if self.b_die == True:
             self.d_time += 0.1
-            if self.d_time >= 5:
+            if self.d_time >= 3.8:
                 self.life_flag = False
                 self.d_time = 0
 
@@ -91,7 +94,6 @@ class Sheep:
 
     def death(self):
         self.b_die = True
-
 
     def draw(self):
         sx = self.x - self.fl.left
@@ -117,11 +119,16 @@ class Sheep:
 def create_sheep():
     team_data_text = '\
 {\
-    "Tiffany" : {"StartState":"L_WALK", "x":100, "y":125},\
-	"Yuna"    : {"StartState":"L_WALK", "x":200, "y":125},\
-	"Sunny"   : {"StartState":"L_WALK", "x":300, "y":125},\
-	"Yuri"    : {"StartState":"L_WALK", "x":400, "y":125},\
-	"Jessica" : {"StartState":"L_WALK", "x":500, "y":125}\
+    "Sheep1" : {"StartState":"L_WALK", "x":1800, "y":195, "min":0, "max":2000},\
+	"Sheep2"    : {"StartState":"L_WALK", "x":1900, "y":195, "min":0, "max":2000},\
+	"Sheep3"   : {"StartState":"L_WALK", "x":2000, "y":195, "min":0, "max":2000},\
+	"Sheep4"    : {"StartState":"R_WALK", "x":2100, "y":120, "min":2120, "max":2700},\
+	"Sheep5"   : {"StartState":"R_WALK", "x":2250, "y":120, "min":2120, "max":2700},\
+	"Sheep6"   : {"StartState":"R_WALK", "x":2350, "y":120, "min":2120, "max":2700},\
+	"Sheep7"    : {"StartState":"R_WALK", "x":2950, "y":60, "min":2780, "max":3200},\
+	"Sheep8"   : {"StartState":"R_WALK", "x":3050, "y":60, "min":2780, "max":3200},\
+	"Sheep9"   : {"StartState":"R_WALK", "x":3150, "y":60, "min":2780, "max":3200},\
+	"Sheep10" : {"StartState":"R_WALK", "x":3500, "y":180, "min":3350, "max":3600}\
 }\
 '
     yang_state_table = {
@@ -136,6 +143,8 @@ def create_sheep():
         yang.name = name
         yang.x = team_data[name]['x']
         yang.y = team_data[name]['y']
+        yang.min = team_data[name]['min']
+        yang.max = team_data[name]['max']
         yang.state = yang_state_table[team_data[name]['StartState']]
         yangs.append(yang)
 

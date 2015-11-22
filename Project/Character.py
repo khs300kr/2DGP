@@ -3,7 +3,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 20.0                    # Km / Hour
+    RUN_SPEED_KMPH = 100.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -18,11 +18,13 @@ class Character:
 
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
 
-    def __init__(self,y):
+    def __init__(self):
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.x = 100
-        self.y = y + 50
+        self.y = 215
+        self.fy = 0
+        self.speed = 0
         #능력치
         self.att = 1
         self.life = 5
@@ -53,20 +55,22 @@ class Character:
             return max(minimum, min(x, maximum))
 
         self.life_time += frame_time
-        distance = Character.RUN_SPEED_PPS * frame_time
+        self.speed = Character.RUN_SPEED_PPS * frame_time
         self.total_frames += Character.FRAMES_PER_ACTION * Character.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
-        self.x += (self.dir * distance)
-
+        self.x += (self.dir * self.speed)
         self.x = clamp(0, self.x, self.fl.w)
 
-        if self.b_jump == 1:
+        if self.b_jump == True:
             self.j_time += 0.18
             self.y -= -9 + (0.98 * self.j_time * self.j_time) / 2
-            if self.y <= self.fl.height + 50:
+            if self.y <= self.fy:
                 self.j_time = 0
                 self.b_jump = False
-                self.y = self.fl.height + 50
+                self.y = self.fy
+        else: # 중력 적용
+            self.y += -9 + (0.98) / 2
+
         if self.b_attack == 1:
             self.a_time += 0.2
             if self.a_time >= 2:
@@ -119,19 +123,47 @@ class Character:
         x_right_offset = max(0,self.x - self.fl.w + self.canvas_width//2)
         x_offset = x_left_offset + x_right_offset
 
-        return self.canvas_width//2+x_offset - 40, self.y - 50, self.canvas_width//2+x_offset + 10, self.y + 40
+        return self.canvas_width//2+x_offset - 35, self.y - 50, self.canvas_width//2+x_offset + 5, self.y + 35
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
 
-    def knockback(self):
-        #self.x -= 100
-        pass
+    def die(self):
+        self.life -= 1
 
     def set_floor(self,fl):
         self.fl = fl
 
-
-
-
-
+# Stage1 충돌
+    def floor_collidebb(self):
+        self.y = 165 + 50
+        self.fy = 165 + 50
+    def floor_collidecc(self):
+        self.y = 90 + 50
+        self.fy = 90 + 50
+    def floor_collidedd(self):
+        self.y = 30 + 50
+        self.fy = 30 + 50
+    def floor_collideff(self):
+        self.y = 150 + 50
+        self.fy = 150 + 50
+    def floor_doublecollide_b_c(self):
+        self.y = 90 + 50
+        self.fy = 90 + 50
+        if self.state in (self.L_WALK,):
+            self.x -= (self.dir * self.speed)
+    def floor_doublecollide_c_d(self):
+        self.y = 30 + 50
+        self.fy = 30 + 50
+        if self.state in (self.L_WALK,):
+            self.x -= (self.dir * self.speed)
+    def floor_doublecollide_d_e(self):
+        self.y = 30 + 50
+        self.fy = 30 + 50
+        if self.state in (self.R_WALK,):
+            self.x -= (self.dir * self.speed)
+    def floor_doublecollide_e_f(self):
+        self.y = 90 + 50
+        self.fy = 90 + 50
+        if self.state in (self.R_WALK,):
+            self.x -= (self.dir * self.speed)
