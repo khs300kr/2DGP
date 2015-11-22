@@ -1,9 +1,9 @@
 from pico2d import*
 
 
-class Monster:
+class Sheep:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
-    RUN_SPEED_KMPH = 20.0                    # Km / Hour
+    RUN_SPEED_KMPH = 30.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -16,65 +16,127 @@ class Monster:
     hit = None
     die = None
 
+    L_WALK,R_WALK = 0, 1
+
     def __init__(self):
-        self.x = 1200
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
+        self.x = 900
         self.y = 125
+        self.dir = -1
+        self.state = self.L_WALK
+        self.life_flag = True
+        # 능력치
+        self.hp = 5
         self.speed = 300
         self.total_frames = 0.0
         self.frame = 0
+        self.die_frame = 0
         self.dir = -1
         #hit
-        self.j_time = 0
+        self.h_time = 0
         self.b_hit = False
         self.frame_hit = 0
         #die
-        self.a_time = 0
+        self.d_time = 0
         self.b_die = False
         self.frame_die = 0
 
-        if Monster.image == None:
-            Monster.image = load_image('Resource/Monster/Sheep/sheep_run.png')
-        if Monster.hit == None:
-            Monster.hit = load_image('Resource/Monster/Sheep/sheep_hit.png')
-        if Monster.die == None:
-            Monster.die = load_image('Resource/Monster/Sheep/sheep_die.png')
+        if Sheep.image == None:
+            Sheep.image = load_image('Resource/Monster/Sheep/sheep_run.png')
+        if Sheep.hit == None:
+            Sheep.hit = load_image('Resource/Monster/Sheep/sheep_hit.png')
+        if Sheep.die == None:
+            Sheep.die = load_image('Resource/Monster/Sheep/sheep_die.png')
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
             return max(minimum, min(x, maximum))
 
-        self.total_frames += Monster.FRAMES_PER_ACTION * Monster.ACTION_PER_TIME * frame_time
+        self.total_frames += Sheep.FRAMES_PER_ACTION * Sheep.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 3
-        self.x -= frame_time * self.speed
-        self.x = clamp(100, self.x, 2048)
+        self.die_frame = int(self.total_frames) % 5
 
-        #if self.b_hit == True:
-            #self.j_time += 0.5
-            #self.y -= -15 + (0.98 * self.j_time * self.j_time) / 2
-            #if self.y <= 145:
-             #   self.j_time = 0
-              #  self.b_jump = False
-              #  self.y = 145
-           # pass
-       # if self.b_die == True:
-           # self.a_time += 0.5
-           # if self.a_time >= 2:
-               # self.a_time = 0
-                #self.b_attack = False
-           # pass
+        if self.b_die == False:
+            self.x += frame_time * Sheep.RUN_SPEED_PPS * self.dir
+
+        if self.x < 0:
+            self.dir = 1
+            self.state = self.R_WALK
+            self.frame_hit = 1
+            self.frame_die = 1
+        elif self.x > 1000:
+            self.dir = -1
+            self.state = self.L_WALK
+            self.frame_hit = 0
+            self.frame_die = 0
+
+        if self.b_hit == True:
+            self.h_time += 0.1
+            if self.h_time >= 2:
+               self.h_time = 0
+               self.b_hit = False
+
+        if self.b_die == True:
+            self.d_time += 0.1
+            if self.d_time >= 5:
+                self.life_flag = False
+                self.d_time = 0
+
+
+    def hurt(self,att):
+        self.b_hit = True
+        self.hp -= att
+        print("몬스터 hp = %d" %(self.hp))
+
+    def death(self):
+        self.b_die = True
 
 
     def draw(self):
+        sx = self.x - self.fl.left
+
         if self.b_hit == True:
-            self.hit.clip_draw(0,65, 100, 100, self.x,self.y)
-       # elif self.b_die == True:
-            #pass
-           # self.die.clip_draw(self.frame_die * 100,65 , 100 ,100 ,self.x, self.y)
+            self.hit.clip_draw(0,self.frame_hit * 65 ,100,65,sx,self.y)
+        elif self.b_die == True:
+            self.die.clip_draw(self.die_frame * 100, self.frame_die * 65 ,100,65,sx,self.y)
         else:
-            self.image.clip_draw(self.frame * 100,0, 100, 65, self.x, self.y)
+            self.image.clip_draw(self.frame * 100,self.state*65, 100, 65, sx, self.y)
 
     def get_bb(self):
-        return self.x - 40, self.y - 30, self.x + 30, self.y + 20
+        sx = self.x - self.fl.left
+        return sx - 40, self.y - 30, sx + 30, self.y + 20
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+
+    def set_floor(self,fl):
+        self.fl = fl
+
+
+def create_sheep():
+    team_data_text = '\
+{\
+    "Tiffany" : {"StartState":"L_WALK", "x":100, "y":125},\
+	"Yuna"    : {"StartState":"L_WALK", "x":200, "y":125},\
+	"Sunny"   : {"StartState":"L_WALK", "x":300, "y":125},\
+	"Yuri"    : {"StartState":"L_WALK", "x":400, "y":125},\
+	"Jessica" : {"StartState":"L_WALK", "x":500, "y":125}\
+}\
+'
+    yang_state_table = {
+        "L_WALK" : Sheep.L_WALK,
+        "R_WALK" : Sheep.R_WALK,
+    }
+    team_data = json.loads(team_data_text)
+    yangs = []
+
+    for name in team_data:
+        yang = Sheep()
+        yang.name = name
+        yang.x = team_data[name]['x']
+        yang.y = team_data[name]['y']
+        yang.state = yang_state_table[team_data[name]['StartState']]
+        yangs.append(yang)
+
+    return yangs

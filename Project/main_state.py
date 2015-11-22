@@ -13,26 +13,28 @@ from Bullet import *
 name = "MainState"
 
 character = None
-bullet = None
 floor = None
 background = None
 bullets = None
-monster = None
+yangs = None
 
 
 def create_world():
-    global character, floor, background, monster, bullets, bullet
-    character = Character()
-    monster = Monster()
+    global character, floor, background, bullets , yangs
+    character = Character(95)
+    yangs = create_sheep();
     floor = Floor()
     background = Background(1024,600)
+
     floor.set_center_object(character)
     character.set_floor(floor)
+    for yang in yangs:
+        yang.set_floor(floor)
     bullets = list()
 
 def destroy_world():
-    global character, floor, background, monster
-    del(monster)
+    global character, floor, background#, sheep
+    #del(sheep)
     del(character)
     del(floor)
     del(background)
@@ -86,22 +88,37 @@ def collide(a,b):
 
 
 def update(frame_time):
-    global bullets
+    #global bullets, yangs
 
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
-    monster.update(frame_time)
+
+    for yang in yangs:
+        yang.update(frame_time)
+        if collide(character,yang):
+            character.knockback()
+        if yang.life_flag == False:
+            yangs.remove(yang)
 
     for bullet in bullets:
         bullet.update(frame_time)
-        if bullet.x > 2048:
-            bullets.remove(bullet)
+        for yang in yangs:
+            if collide(yang,bullet):
+                yang.hurt(character.att)
+                if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                    bullets.remove(bullet)
+                if yang.hp <= 0:
+                    yang.death()
 
-    if collide(character,monster):
-        character.knockback()
+
+        if bullet.sx >= bullet.canvas_width:
+                bullets.remove(bullet)
+        elif bullet.x <= 0:
+                bullets.remove(bullet)
 
     delay(0.010)
+
 
 def draw(frame_time):
     clear_canvas()
@@ -110,8 +127,10 @@ def draw(frame_time):
     floor.draw_bb()
     character.draw()
     character.draw_bb()
-    monster.draw()
-    monster.draw_bb()
+
+    for yang in yangs:
+        yang.draw()
+        yang.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
