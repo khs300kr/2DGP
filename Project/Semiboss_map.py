@@ -44,7 +44,7 @@ class Floor:
 
     def __init__(self):
         if Floor.image == None:
-            self.image = load_image('Resource/Map/Stage1.png')
+            self.image = load_image('Resource/Map/Semiboss.png')
         if Floor.portal == None:
             self.portal = load_image("Resource/Map/portal.png")
         self.speed = 0
@@ -76,26 +76,19 @@ class Floor:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_cc())
         draw_rectangle(*self.get_dd())
-        draw_rectangle(*self.get_ee())
-        draw_rectangle(*self.get_ff())
-        draw_rectangle(*self.get_portal())
+        #draw_rectangle(*self.get_portal())
 
     def get_bb(self):
         sx = self.x - self.left
-        return sx,0,sx + 2065,165
+        return sx,0,sx + 510,50
     def get_cc(self):
         sx = self.x - self.left
-        return 2065 + sx,0,sx + 2735,90
+        return 510 + sx,0,sx + 600,110
     def get_dd(self):
         sx = self.x - self.left
-        return 2735 + sx,0,sx + 3220,30
-    def get_ee(self):
-        sx = self.x - self.left
-        return 3220 + sx,0,sx + 3310,90
-    def get_ff(self):
-        sx = self.x - self.left
-        return 3310 + sx,0,sx + 3874,150
+        return 600 + sx,0,sx + 1500,170
     def get_portal(self):
+        pass
         sx = self.x - self.left
         return 3745 + sx,160, 3800 + sx , 185
 

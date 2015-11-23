@@ -1,16 +1,10 @@
-import random
-import json
-import os
 import game_framework
-import title_state
+import Semiboss_state
 
-from pico2d import *
 from Character import *
 from Monster import *
 from Stage import *
 from Bullet import *
-
-name = "MainState"
 
 character = None
 floor = None
@@ -33,8 +27,7 @@ def create_world():
     bullets = list()
 
 def destroy_world():
-    global character, floor, background#, sheep
-    #del(sheep)
+    global character, floor, background
     del(character)
     del(floor)
     del(background)
@@ -69,6 +62,11 @@ def handle_events(frame_time):
         else:
             if (event.type,event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
+            elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_UP):
+                if floor.portal_flag == True:
+                    game_framework.change_state(Semiboss_state)
+                else:
+                    pass
             else:
                 character.handle_event(event)
                 if character.b_attack == True:
@@ -117,6 +115,14 @@ def stageff_collide(a,b):
     if top_a < bottom_b : return False
     if bottom_a > top_b : return False
     return True
+def portal_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_portal()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
 
 def update(frame_time):
     background.update(frame_time)
@@ -139,14 +145,14 @@ def update(frame_time):
         character.floor_collidecc()
     if stageee_collide(character,floor) and stageff_collide(character,floor): #e,f
         character.floor_doublecollide_e_f()
-
     elif stageff_collide(character,floor): #f
         character.floor_collideff()
 
     for yang in yangs:
         yang.update(frame_time)
-        if collide(character,yang):
-            character.die()
+        if character.b_death == False:
+            if collide(character,yang):
+                character.die()
         if yang.life_flag == False:
             yangs.remove(yang)
 
@@ -161,11 +167,20 @@ def update(frame_time):
                     yang.death()
 
         if bullet.sx >= bullet.canvas_width:
+            if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-        elif bullet.x <= 0:
+                print("총알 갯수 = %d" %(bullets.count(bullet)))
+        if bullet.x <= 0:
+            if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
+                print("총알 갯수 = %d" %(bullets.count(bullet)))
 
-    delay(0.010)
+    if portal_collide(character,floor):
+        floor.check_portal()
+    else:
+        floor.out_portal()
+
+    delay(0.009)
 
 
 def draw(frame_time):

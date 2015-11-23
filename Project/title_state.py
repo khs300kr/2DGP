@@ -1,7 +1,8 @@
-import game_framework
-import main_state
 from pico2d import *
 
+import game_framework
+import Semiboss_state
+import first_stage
 
 name = "TitleState"
 image = None
@@ -11,9 +12,11 @@ def enter():
     global image
     image = load_image('Resource/State/title.png')
 
+
 def exit():
     global image
     del(image)
+
 
 def handle_events(frame_time):
     events = get_events()
@@ -24,7 +27,7 @@ def handle_events(frame_time):
             if(event.type,event.key) == (SDL_KEYDOWN,SDLK_ESCAPE):
                 game_framework.quit()
             elif(event.type,event.key) == (SDL_KEYDOWN,SDLK_SPACE):
-                game_framework.change_state(main_state)
+                game_framework.change_state(Semiboss_state)
 
 
 def draw(frame_time):

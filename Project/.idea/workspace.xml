@@ -20,77 +20,125 @@
     <favorites_list name="Project" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Character.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Character.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="125" column="110" selection-start-line="125" selection-start-column="110" selection-end-line="125" selection-end-column="110" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-                <element signature="e#4841#4885#0" expanded="false" />
-                <element signature="e#4925#4967#0" expanded="false" />
-                <element signature="e#5007#5049#0" expanded="false" />
-                <element signature="e#5089#5133#0" expanded="false" />
-                <element signature="e#5181#5310#0" expanded="false" />
-                <element signature="e#5358#5487#0" expanded="false" />
-                <element signature="e#5535#5664#0" expanded="false" />
-                <element signature="e#5712#5841#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="main_state.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/main_state.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="131" column="45" selection-start-line="131" selection-start-column="45" selection-end-line="131" selection-end-column="45" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-                <element signature="e#1517#1778#0" expanded="false" />
-                <element signature="e#1809#2070#0" expanded="false" />
-                <element signature="e#2101#2362#0" expanded="false" />
-                <element signature="e#2393#2654#0" expanded="false" />
-                <element signature="e#2685#2946#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Monster.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Monster.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5896328">
-              <caret line="132" column="1" selection-start-line="132" selection-start-column="1" selection-end-line="132" selection-end-column="1" />
-              <folding>
-                <element signature="e#0#19#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="title_state.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/title_state.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Stage.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Stage.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="65" column="29" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf>
+          <file leaf-file-name="first_stage.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/first_stage.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="1" column="21" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="21" />
+                  <folding>
+                    <element signature="e#1642#1903#0" expanded="false" />
+                    <element signature="e#1934#2195#0" expanded="false" />
+                    <element signature="e#2226#2487#0" expanded="false" />
+                    <element signature="e#2518#2779#0" expanded="false" />
+                    <element signature="e#2810#3071#0" expanded="false" />
+                    <element signature="e#3101#3366#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Stage.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Stage.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="101" column="34" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="title_state.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/title_state.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.4514039">
+                  <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+                  <folding>
+                    <element signature="e#0#20#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Character.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Character.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="-6.266667">
+                  <caret line="204" column="21" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="21" />
+                  <folding>
+                    <element signature="e#0#20#0" expanded="true" />
+                    <element signature="e#5721#5765#0" expanded="false" />
+                    <element signature="e#5805#5847#0" expanded="false" />
+                    <element signature="e#5887#5929#0" expanded="false" />
+                    <element signature="e#5969#6013#0" expanded="false" />
+                    <element signature="e#6061#6190#0" expanded="false" />
+                    <element signature="e#6238#6367#0" expanded="false" />
+                    <element signature="e#6415#6544#0" expanded="false" />
+                    <element signature="e#6592#6743#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Semiboss_state.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Semiboss_state.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="121" column="37" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="37" />
+                  <folding>
+                    <element signature="e#0#13#0" expanded="true" />
+                    <element signature="e#1706#1967#0" expanded="false" />
+                    <element signature="e#1998#2259#0" expanded="false" />
+                    <element signature="e#2290#2551#0" expanded="false" />
+                    <element signature="e#2581#2846#0" expanded="false" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file leaf-file-name="Semiboss_map.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Semiboss_map.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Monster.py" pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/Monster.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="0.0">
+                  <caret line="139" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="150" selection-end-column="16" />
+                  <folding>
+                    <element signature="e#0#19#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="Semiboss_monster.py" pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/Semiboss_monster.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state vertical-scroll-proportion="6.1555076">
+                  <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
+                  <folding>
+                    <element signature="e#0#19#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -103,15 +151,22 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/Resource/Stage.py" />
-        <option value="$PROJECT_DIR$/title_state.py" />
         <option value="$PROJECT_DIR$/start_state.py" />
         <option value="$PROJECT_DIR$/game_framework.py" />
         <option value="$PROJECT_DIR$/mygame.py" />
-        <option value="$PROJECT_DIR$/Bullet.py" />
-        <option value="$PROJECT_DIR$/Stage.py" />
-        <option value="$PROJECT_DIR$/main_state.py" />
-        <option value="$PROJECT_DIR$/Character.py" />
         <option value="$PROJECT_DIR$/Monster.py" />
+        <option value="$PROJECT_DIR$/Bullet.py" />
+        <option value="$PROJECT_DIR$/main_state.py" />
+        <option value="$PROJECT_DIR$/Stage.py" />
+        <option value="$PROJECT_DIR$/Resource/Ui/second_map.py" />
+        <option value="$PROJECT_DIR$/second_stage.py" />
+        <option value="$PROJECT_DIR$/first_stage.py" />
+        <option value="$PROJECT_DIR$/Semiboss_map.py" />
+        <option value="$PROJECT_DIR$/Character.py" />
+        <option value="$PROJECT_DIR$/Semiboss_state.py" />
+        <option value="$PROJECT_DIR$/state/first_stage.py" />
+        <option value="$PROJECT_DIR$/title_state.py" />
+        <option value="$PROJECT_DIR$/Semiboss_monster.py" />
       </list>
     </option>
   </component>
@@ -147,8 +202,8 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -180,6 +235,42 @@
               <option name="myItemId" value="Resource" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Ui" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resource" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Resource" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Map" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -188,9 +279,15 @@
   <component name="PropertiesComponent">
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Game/오픈리소스/2DProject 양기석 2차" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Lab/1014test" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\2DGP\Project" />
+      <recent name="C:\2DGP\Project\state" />
+    </key>
   </component>
   <component name="RunManager" selected="Python.mygame">
     <configuration default="false" name="title_state" type="PythonConfigurationType" factoryName="Python" temporary="true">
@@ -239,7 +336,7 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="Project" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main_state.py" />
+      <option name="SCRIPT_NAME" value="C:\2DGP\Project\first_stage.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -467,22 +564,78 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="12" />
+      <option name="time" value="22" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/main_state.py">
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="179" column="0" selection-start-line="179" selection-start-column="0" selection-end-line="179" selection-end-column="0" />
+          <folding>
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Character.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#5721#5765#0" expanded="false" />
+            <element signature="e#5805#5847#0" expanded="false" />
+            <element signature="e#5887#5929#0" expanded="false" />
+            <element signature="e#5969#6013#0" expanded="false" />
+            <element signature="e#6061#6190#0" expanded="false" />
+            <element signature="e#6238#6367#0" expanded="false" />
+            <element signature="e#6415#6544#0" expanded="false" />
+            <element signature="e#6592#6743#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Map/Stage1.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/title_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Stage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="105" column="31" selection-start-line="105" selection-start-column="31" selection-end-line="105" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1517#1778#0" expanded="false" />
-            <element signature="e#1809#2070#0" expanded="false" />
-            <element signature="e#2101#2362#0" expanded="false" />
-            <element signature="e#2393#2654#0" expanded="false" />
-            <element signature="e#2685#2946#0" expanded="false" />
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -501,34 +654,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_state.py">
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1517#1778#0" expanded="false" />
-            <element signature="e#1809#2070#0" expanded="false" />
-            <element signature="e#2101#2362#0" expanded="false" />
-            <element signature="e#2393#2654#0" expanded="false" />
-            <element signature="e#2685#2946#0" expanded="false" />
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/MapleMap_image.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/mapBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/tileBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mygame.py">
@@ -562,34 +700,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_state.py">
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1517#1778#0" expanded="false" />
-            <element signature="e#1809#2070#0" expanded="false" />
-            <element signature="e#2101#2362#0" expanded="false" />
-            <element signature="e#2393#2654#0" expanded="false" />
-            <element signature="e#2685#2946#0" expanded="false" />
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/MapleMap_image.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/mapBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/tileBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mygame.py">
@@ -623,34 +746,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_state.py">
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="178" column="4" selection-start-line="178" selection-start-column="4" selection-end-line="178" selection-end-column="4" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1517#1778#0" expanded="false" />
-            <element signature="e#1809#2070#0" expanded="false" />
-            <element signature="e#2101#2362#0" expanded="false" />
-            <element signature="e#2393#2654#0" expanded="false" />
-            <element signature="e#2685#2946#0" expanded="false" />
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
           </folding>
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/MapleMap_image.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/mapBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/tileBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mygame.py">
@@ -665,36 +773,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Character/jump.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Character/attack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/tileBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/MapleMap_image.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/mapBack.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/Background.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://C:/Python34/Lib/site-packages/pico2d.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -702,27 +780,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Bullet/Bullet.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/game_framework.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04042553">
           <caret line="87" column="43" selection-start-line="87" selection-start-column="43" selection-end-line="87" selection-end-column="43" />
-          <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Map/1.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Monster/Sheep/sheep_hit.png">
-      <provider selected="true" editor-type-id="images">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mygame.py">
@@ -732,12 +794,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Character/Moving.png">
+    <entry file="file://$PROJECT_DIR$/2012.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/start_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7796976">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Bullet/Bullet.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Resource/Monster/Sheep/sheep_run.png">
+    <entry file="file://$PROJECT_DIR$/Resource/Character/attack.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Character/jump.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Character/Moving.png">
       <provider selected="true" editor-type-id="images">
         <state />
       </provider>
@@ -747,20 +833,51 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/2012.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="12" selection-start-line="3" selection-start-column="12" selection-end-line="3" selection-end-column="12" />
-          <folding />
-        </state>
+    <entry file="file://$PROJECT_DIR$/Resource/Monster/Sheep/sheep_hit.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Monster/Sheep/sheep_run.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/State/kpu_credit.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Bullet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="19" column="6" selection-start-line="19" selection-start-column="4" selection-end-line="19" selection-end-column="6" />
-          <folding />
+        <state vertical-scroll-proportion="0.20950323">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
         </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Map/Background.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Map/portal.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Ui/Death.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Ui/Hp.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resource/Ui/Hp_Title.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Resource/Map/Stage1.png">
@@ -768,51 +885,34 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/start_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7796976">
-          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/title_state.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Character.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="125" column="110" selection-start-line="125" selection-start-column="110" selection-end-line="125" selection-end-column="110" />
+        <state vertical-scroll-proportion="-6.266667">
+          <caret line="204" column="21" selection-start-line="204" selection-start-column="21" selection-end-line="204" selection-end-column="21" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
-            <element signature="e#4841#4885#0" expanded="false" />
-            <element signature="e#4925#4967#0" expanded="false" />
-            <element signature="e#5007#5049#0" expanded="false" />
-            <element signature="e#5089#5133#0" expanded="false" />
-            <element signature="e#5181#5310#0" expanded="false" />
-            <element signature="e#5358#5487#0" expanded="false" />
-            <element signature="e#5535#5664#0" expanded="false" />
-            <element signature="e#5712#5841#0" expanded="false" />
+            <element signature="e#5721#5765#0" expanded="false" />
+            <element signature="e#5805#5847#0" expanded="false" />
+            <element signature="e#5887#5929#0" expanded="false" />
+            <element signature="e#5969#6013#0" expanded="false" />
+            <element signature="e#6061#6190#0" expanded="false" />
+            <element signature="e#6238#6367#0" expanded="false" />
+            <element signature="e#6415#6544#0" expanded="false" />
+            <element signature="e#6592#6743#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main_state.py">
+    <entry file="file://$PROJECT_DIR$/Semiboss_state.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="131" column="45" selection-start-line="131" selection-start-column="45" selection-end-line="131" selection-end-column="45" />
+          <caret line="121" column="37" selection-start-line="121" selection-start-column="37" selection-end-line="121" selection-end-column="37" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
-            <element signature="e#1517#1778#0" expanded="false" />
-            <element signature="e#1809#2070#0" expanded="false" />
-            <element signature="e#2101#2362#0" expanded="false" />
-            <element signature="e#2393#2654#0" expanded="false" />
-            <element signature="e#2685#2946#0" expanded="false" />
+            <element signature="e#1706#1967#0" expanded="false" />
+            <element signature="e#1998#2259#0" expanded="false" />
+            <element signature="e#2290#2551#0" expanded="false" />
+            <element signature="e#2581#2846#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -820,15 +920,58 @@
     <entry file="file://$PROJECT_DIR$/Stage.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="65" column="29" selection-start-line="65" selection-start-column="29" selection-end-line="65" selection-end-column="29" />
+          <caret line="101" column="34" selection-start-line="101" selection-start-column="34" selection-end-line="101" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/first_stage.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="7" selection-end-line="1" selection-end-column="21" />
+          <folding>
+            <element signature="e#1642#1903#0" expanded="false" />
+            <element signature="e#1934#2195#0" expanded="false" />
+            <element signature="e#2226#2487#0" expanded="false" />
+            <element signature="e#2518#2779#0" expanded="false" />
+            <element signature="e#2810#3071#0" expanded="false" />
+            <element signature="e#3101#3366#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/title_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4514039">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Semiboss_map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="84" column="31" selection-start-line="84" selection-start-column="31" selection-end-line="84" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Monster.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5896328">
-          <caret line="132" column="1" selection-start-line="132" selection-start-column="1" selection-end-line="132" selection-end-column="1" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="139" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="150" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Semiboss_monster.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="6.1555076">
+          <caret line="150" column="16" selection-start-line="150" selection-start-column="16" selection-end-line="150" selection-end-column="16" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
