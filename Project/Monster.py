@@ -32,7 +32,6 @@ class Sheep:
         self.life_flag = True
         # 능력치
         self.hp = 5
-        self.speed = 300
         self.total_frames = random.randint(0,2)
         self.frame = 0
         self.total_die = 0.0

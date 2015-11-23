@@ -2,11 +2,10 @@ import random
 import json
 import os
 import game_framework
-import title_state
-
 from pico2d import *
+
 from Character import *
-#from Monster import *
+from Semiboss_monster import *
 from Semiboss_map import *
 from Bullet import *
 
@@ -14,27 +13,29 @@ character = None
 floor = None
 background = None
 bullets = None
-#yangs = None
-
+mushs = None
+semiboss = None
 
 def create_world():
-    global character, floor, background, bullets #, yangs
+    global character, floor, background, bullets, mushs, semiboss
     character = Character()
-#    yangs = create_sheep();
+    mushs = create_mush();
     floor = Floor()
     background = Background(1024,600)
-
+    semiboss = Semi()
+    semiboss.set_floor(floor)
     floor.set_center_object(character)
     character.set_floor(floor)
-#    for yang in yangs:
-#        yang.set_floor(floor)
+    for mush in mushs:
+        mush.set_floor(floor)
     bullets = list()
 
 def destroy_world():
-    global character, floor, background
+    global character, floor, background,semiboss
     del(character)
     del(floor)
     del(background)
+    del(semiboss)
 
 
 def shooting():
@@ -68,7 +69,8 @@ def handle_events(frame_time):
                 game_framework.quit()
             elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_UP):
                 if floor.portal_flag == True:
-                    game_framework.change_state(title_state)
+                    pass
+                    #game_framework.change_state(title_state)
                 else:
                     pass
             else:
@@ -116,6 +118,7 @@ def update(frame_time):
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
+    semiboss.update(frame_time)
 
     if collide(character,floor) and stagecc_collide(character,floor): #b,c
         character.semiboss_doublecollide_b_c()
@@ -127,23 +130,23 @@ def update(frame_time):
         character.semiboss_collidecc()
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
-    # for yang in yangs:
-    #     yang.update(frame_time)
-    #     if character.b_death == False:
-    #         if collide(character,yang):
-    #             character.die()
-    #     if yang.life_flag == False:
-    #         yangs.remove(yang)
+    for mush in mushs:
+        mush.update(frame_time)
+        if character.b_death == False:
+            if collide(character,mush):
+                character.die()
+        if mush.life_flag == False:
+            mushs.remove(mush)
 
     for bullet in bullets:
         bullet.update(frame_time)
-        # for yang in yangs:
-        #     if collide(yang,bullet):
-        #         yang.hurt(character.att)
-        #         if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
-        #             bullets.remove(bullet)
-        #         if yang.hp <= 0:
-        #             yang.death()
+        for mush in mushs:
+            if collide(mush,bullet):
+                mush.hurt(character.att)
+                if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                    bullets.remove(bullet)
+                if mush.hp <= 0:
+                    mush.death()
 
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
@@ -169,10 +172,11 @@ def draw(frame_time):
     floor.draw_bb()
     character.draw()
     character.draw_bb()
+    semiboss.draw()
 
-    # for yang in yangs:
-    #     yang.draw()
-    #     yang.draw_bb()
+    for mush in mushs:
+        mush.draw()
+        mush.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
