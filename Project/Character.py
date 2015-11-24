@@ -13,12 +13,15 @@ class Character:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
 
+    #sprite
     image = None
     jump = None
     attack = None
     hp = None
     hp_title = None
     death = None
+    respawn = None
+
 
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
 
@@ -48,6 +51,10 @@ class Character:
         self.frame_attack = 0
         #death
         self.b_death = False
+        #respawn
+        self.respawn_frame = 0.0
+        self.b_respawn = False
+        self.r_time = 0
 
         if Character.image == None:
             Character.image = load_image('Resource/Character/Moving.png')
@@ -61,6 +68,8 @@ class Character:
             Character.hp_title = load_image("Resource/Ui/Hp_Title.png")
         if Character.death == None:
             Character.death = load_image("Resource/Ui/Death.png")
+        if Character.respawn == None:
+            Character.respawn = load_image("Resource/Effect/respawn.png")
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
@@ -83,14 +92,23 @@ class Character:
         else: # 중력 적용
             self.y += -9 + (0.98) / 2
         #attack
-        if self.b_attack == 1:
-            self.a_time += 0.1
-            if self.a_time >= 2:
+        if self.b_attack == True:
+            self.a_time += frame_time
+            if self.a_time >= 0.5:
                 self.a_time = 0
                 self.b_attack = False
         #death
         if self.b_death == True:
             self.x -= (self.dir * self.speed)
+
+        #respawn
+        self.respawn_frame = int(self.total_frames) % 7
+        if self.b_respawn == True:
+            self.r_time += frame_time
+            if self.r_time >= 1.6:
+                self.r_time = 0
+                self.b_respawn = False
+
 
 
     def draw(self):
@@ -110,6 +128,10 @@ class Character:
         else:
             self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100, self.canvas_width//2+x_offset,
                                  self.y)
+        if self.b_respawn == True:
+            self.respawn.clip_draw(self.respawn_frame * 200 , 0 , 200 , 200 , self.canvas_width//2+x_offset , self.y + 45 )
+
+
 
     def handle_event(self,event):
         if (event.type, event.key) == (SDL_KEYDOWN, SDLK_LEFT):
@@ -133,15 +155,21 @@ class Character:
                 self.state = self.R_STAND
                 self.dir = 0
         elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_c):
-                self.b_jump = True
-                if self.b_death == True:
+                if self.b_death == True:  #부활
+                    self.b_respawn = True
                     self.b_death = False
+                else:
+                    self.b_jump = True
         elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_x):
-                self.b_attack = True
-                if self.b_death == True:
+                if self.b_death == True: # 부활
+                    self.b_respawn = True
                     self.b_death = False
+                else:
+                    self.b_attack = True
+
         elif (event.type,event.key) == (SDL_KEYUP,SDLK_x):
                 self.b_attack = False
+
 
     def get_bb(self):
         x_left_offset = min(0,self.x-self.canvas_width//2)

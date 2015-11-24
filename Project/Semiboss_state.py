@@ -120,6 +120,7 @@ def update(frame_time):
     character.update(frame_time)
     semiboss.update(frame_time)
 
+    # 캐릭터와 맵 충돌.
     if collide(character,floor) and stagecc_collide(character,floor): #b,c
         character.semiboss_doublecollide_b_c()
     elif collide(character,floor): #b
@@ -130,14 +131,15 @@ def update(frame_time):
         character.semiboss_collidecc()
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
+    # 몬스터와 캐릭터 충돌.
     for mush in mushs:
         mush.update(frame_time)
-        if character.b_death == False:
+        if character.b_death == False and character.b_respawn == False:
             if collide(character,mush):
                 character.die()
         if mush.life_flag == False:
             mushs.remove(mush)
-
+    # 몬스터와 총알 충돌
     for bullet in bullets:
         bullet.update(frame_time)
         for mush in mushs:

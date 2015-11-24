@@ -28,7 +28,7 @@ class Semi:
         self.max = 0
         self.life_flag = True
         # 능력치
-        self.hp = 100
+        self.hp = 50
         self.total_frames = random.randint(0,6)
         self.frame = 0
         self.total_die = 0.0
@@ -60,8 +60,8 @@ class Semi:
 
 
         if self.b_hit == True:
-            self.h_time += 0.1
-            if self.h_time >= 2:
+            self.h_time += frame_time
+            if self.h_time >= 0.5:
                self.h_time = 0
                self.b_hit = False
 
@@ -75,7 +75,7 @@ class Semi:
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
-        print("몬스터 hp = %d" %(self.hp))
+        print("Semi hp = %d" %(self.hp))
 
     # def death(self):
     #     self.b_die = True
@@ -172,14 +172,14 @@ class Mush:
             self.frame_die = 0
 
         if self.b_hit == True:
-            self.h_time += 0.1
-            if self.h_time >= 2:
+            self.h_time += frame_time
+            if self.h_time >= 0.3:
                self.h_time = 0
                self.b_hit = False
 
         if self.b_die == True:
-            self.d_time += 0.1
-            if self.d_time >= 3.8:
+            self.d_time += frame_time
+            if self.d_time >= 0.7:
                 self.life_flag = False
                 self.d_time = 0
 
@@ -198,7 +198,7 @@ class Mush:
         if self.b_hit == True:
             self.hit.clip_draw(0,self.frame_hit * 80 ,100,80,sx,self.y)
         elif self.b_die == True:
-            self.die.clip_draw(self.die_frame * 100, self.frame_die * 65 ,100,65,sx,self.y)
+            self.die.clip_draw(self.die_frame * 100, self.frame_die * 65 ,100,65,sx,self.y-15)
         else:
             self.image.clip_draw(self.frame * 100,self.state*80, 100, 80, sx, self.y)
 
