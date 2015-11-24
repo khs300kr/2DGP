@@ -147,6 +147,11 @@ def update(frame_time):
                     bullets.remove(bullet)
                 if mush.hp <= 0:
                     mush.death()
+                    # semiboss
+        if collide(semiboss,bullet):
+            semiboss.hurt(character.att)
+            if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                bullets.remove(bullet)
 
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
@@ -173,6 +178,7 @@ def draw(frame_time):
     character.draw()
     character.draw_bb()
     semiboss.draw()
+    semiboss.draw_bb()
 
     for mush in mushs:
         mush.draw()

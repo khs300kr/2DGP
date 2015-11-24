@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 20.0                    # Km / Hour
+    RUN_SPEED_KMPH = 150.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -138,6 +138,8 @@ class Character:
                     self.b_death = False
         elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_x):
                 self.b_attack = True
+                if self.b_death == True:
+                    self.b_death = False
         elif (event.type,event.key) == (SDL_KEYUP,SDLK_x):
                 self.b_attack = False
 

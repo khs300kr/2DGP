@@ -84,7 +84,7 @@ class Semi:
         sx = self.x - self.fl.left
 
         if self.b_hit == True:
-            self.hit.clip_draw(0,self.frame_hit * 80 ,100,80,sx,self.y)
+            self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
         # elif self.b_die == True:
         #     self.die.clip_draw(self.die_frame * 100, self.frame_die * 65 ,100,65,sx,self.y)
         else:
@@ -92,7 +92,7 @@ class Semi:
 
     def get_bb(self):
         sx = self.x - self.fl.left
-        return sx - 40, self.y - 30, sx + 30, self.y + 20
+        return sx - 45, self.y - 60, sx + 35, self.y + 30
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
@@ -204,7 +204,7 @@ class Mush:
 
     def get_bb(self):
         sx = self.x - self.fl.left
-        return sx - 40, self.y - 30, sx + 30, self.y + 20
+        return sx - 40, self.y - 40, sx + 10, self.y + 20
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
