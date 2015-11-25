@@ -1,5 +1,6 @@
 import game_framework
 import Semiboss_state
+import temp
 
 from Character import *
 from Monster import *
@@ -64,7 +65,10 @@ def handle_events(frame_time):
                 game_framework.quit()
             elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_UP):
                 if floor.portal_flag == True:
+                    temp.character_life = character.life
+
                     game_framework.change_state(Semiboss_state)
+
                 else:
                     pass
             else:
@@ -150,7 +154,7 @@ def update(frame_time):
 
     for yang in yangs:
         yang.update(frame_time)
-        if character.b_death == False:
+        if character.b_death == False and character.b_respawn == False and yang.b_die == False :
             if collide(character,yang):
                 character.die()
         if yang.life_flag == False:
@@ -159,12 +163,13 @@ def update(frame_time):
     for bullet in bullets:
         bullet.update(frame_time)
         for yang in yangs:
-            if collide(yang,bullet):
-                yang.hurt(character.att)
-                if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
-                    bullets.remove(bullet)
-                if yang.hp <= 0:
-                    yang.death()
+            if yang.b_die == False:
+                if collide(yang,bullet):
+                    yang.hurt(character.att)
+                    if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                        bullets.remove(bullet)
+                    if yang.hp <= 0:
+                        yang.death()
 
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정

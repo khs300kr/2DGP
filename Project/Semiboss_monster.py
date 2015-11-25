@@ -70,7 +70,7 @@ class Semi:
         if self.b_die == True:
             self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
             self.d_time += frame_time
-            if self.d_time >= 0.5:
+            if self.d_time >= 3.2:
                 self.life_flag = False
                 print("False")
                 self.d_time = 0

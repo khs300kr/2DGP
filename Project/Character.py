@@ -102,8 +102,8 @@ class Character:
             self.x -= (self.dir * self.speed)
 
         #respawn
-        self.respawn_frame = int(self.total_frames) % 7
         if self.b_respawn == True:
+            self.respawn_frame = int(self.total_frames) % 7
             self.r_time += frame_time
             if self.r_time >= 1.6:
                 self.r_time = 0

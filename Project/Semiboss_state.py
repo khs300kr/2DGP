@@ -1,6 +1,7 @@
 import random
 import json
 import os
+import temp
 import game_framework
 from pico2d import *
 
@@ -14,16 +15,18 @@ floor = None
 background = None
 bullets = None
 mushs = None
-semiboss = None
+semiboses = list()
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboss
+    global character, floor, background, bullets, mushs, semiboses
     character = Character()
+    character.life = temp.character_life
     mushs = create_mush();
     floor = Floor()
     background = Background(1024,600)
-    semiboss = Semi()
-    semiboss.set_floor(floor)
+    semiboses.append(Semi())
+    for semiboss in semiboses:
+        semiboss.set_floor(floor)
     floor.set_center_object(character)
     character.set_floor(floor)
     for mush in mushs:
@@ -114,12 +117,9 @@ def portal_collide(a,b):
     return True
 
 def update(frame_time):
-    global semiboss
-
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
-    semiboss.update(frame_time)
 
     # 캐릭터와 맵 충돌.
     if collide(character,floor) and stagecc_collide(character,floor): #b,c
@@ -135,32 +135,43 @@ def update(frame_time):
     # 몬스터와 캐릭터 충돌.
     for mush in mushs:
         mush.update(frame_time)
-        if character.b_death == False and character.b_respawn == False:
+        if character.b_death == False and character.b_respawn == False and mush.b_die == False:
             if collide(character,mush):
                 character.die()
         if mush.life_flag == False:
             mushs.remove(mush)
+    # semiboss 캐릭터 충돌
+    for semiboss in semiboses:
+        semiboss.update(frame_time)
+        if character.b_death == False and character.b_respawn == False and semiboss.b_die == False:
+            if collide(character,semiboss):
+                character.die()
+        if semiboss.life_flag == False:
+            semiboses.remove(semiboss)
+
     # 몬스터와 총알 충돌
     for bullet in bullets:
         bullet.update(frame_time)
         for mush in mushs:
-            if collide(mush,bullet):
-                mush.hurt(character.att)
-                if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
-                    bullets.remove(bullet)
-                if mush.hp <= 0:
-                    mush.death()
+            if mush.b_die == False:
+                if collide(mush,bullet):
+                    mush.hurt(character.att)
+                    if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                        bullets.remove(bullet)
+                    if mush.hp <= 0:
+                        mush.death()
 
     # 준보스와 총알 충돌
-        if collide(semiboss,bullet):
-            semiboss.hurt(character.att)
-            if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
-                bullets.remove(bullet)
-            if semiboss.hp <= 0:
-                #semiboss.death()
-                del semiboss
-            #if semiboss.life_flag == False:
-            #    pass
+        for semiboss in semiboses:
+            if semiboss.b_die == False:
+                if collide(semiboss,bullet):
+                    semiboss.hurt(character.att)
+                    if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                        bullets.remove(bullet)
+                    if semiboss.hp <= 0:
+                        semiboss.death()
+
+    # 총알 화면밖 나갈시 삭제
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
@@ -179,15 +190,16 @@ def update(frame_time):
 
 
 def draw(frame_time):
-    global semiboss
     clear_canvas()
     background.draw()
     floor.draw()
     floor.draw_bb()
     character.draw()
     character.draw_bb()
-    semiboss.draw()
-    semiboss.draw_bb()
+
+    for semiboss in semiboses:
+        semiboss.draw()
+        semiboss.draw_bb()
 
     for mush in mushs:
         mush.draw()
