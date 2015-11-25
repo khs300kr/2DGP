@@ -13,11 +13,12 @@ class Semi:
     TIME_PER_ACTION = 0.8
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 6
-    FRAMES_PER_DIE = 0
+    FRAMES_PER_DIE = 12
 
     image = None
     hit = None
     die = None
+    summon = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -28,7 +29,7 @@ class Semi:
         self.max = 0
         self.life_flag = True
         # 능력치
-        self.hp = 50
+        self.hp = 10
         self.total_frames = random.randint(0,6)
         self.frame = 0
         self.total_die = 0.0
@@ -41,23 +42,24 @@ class Semi:
         self.b_die = False
         self.die_frame = 0
         self.frame_die = 0
+        #summon
+        self.s_time = 0
+        self.summon_frame = 0
+        self.b_summon = False
 
         if Semi.image == None:
             Semi.image = load_image('Resource/Monster/Semi/semi_stand.png')
         if Semi.hit == None:
             Semi.hit = load_image('Resource/Monster/Semi/semi_hit.png')
-        #if Semi.die == None:
-        #    Semi.die = load_image('Resource/Monster/Semi/mush_die.png')
+        #if Semi.summon == None:
+        #   Semi.summon = load_image('Resource/Monster/Semi/semi.summon.png')
+        if Semi.die == None:
+           Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
-        self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 6
-        #self.die_frame = int(self.total_die) % 3
-
-        #if self.b_die == False:
-        #    self.x += frame_time * Mush.RUN_SPEED_PPS * self.dir
-
+        self.die_frame = int(self.total_die) % 12
 
         if self.b_hit == True:
             self.h_time += frame_time
@@ -65,28 +67,29 @@ class Semi:
                self.h_time = 0
                self.b_hit = False
 
-        # if self.b_die == True:
-        #     self.d_time += 0.1
-        #     if self.d_time >= 3.8:
-        #         self.life_flag = False
-        #         self.d_time = 0
-
+        if self.b_die == True:
+            self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
+            self.d_time += frame_time
+            if self.d_time >= 0.5:
+                self.life_flag = False
+                print("False")
+                self.d_time = 0
 
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
         print("Semi hp = %d" %(self.hp))
 
-    # def death(self):
-    #     self.b_die = True
+    def death(self):
+        self.b_die = True
 
     def draw(self):
         sx = self.x - self.fl.left
 
         if self.b_hit == True:
             self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
-        # elif self.b_die == True:
-        #     self.die.clip_draw(self.die_frame * 100, self.frame_die * 65 ,100,65,sx,self.y)
+        elif self.b_die == True:
+            self.die.clip_draw(self.die_frame * 200, 0 ,200,200,sx,self.y)
         else:
             self.image.clip_draw(self.frame * 100,0, 100, 130, sx, self.y)
 
@@ -99,6 +102,11 @@ class Semi:
 
     def set_floor(self,fl):
         self.fl = fl
+
+
+#######################################################################################################################
+
+
 
 class Mush:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
@@ -153,7 +161,6 @@ class Mush:
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
-        self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
         self.die_frame = int(self.total_die) % 3
 
@@ -178,6 +185,7 @@ class Mush:
                self.b_hit = False
 
         if self.b_die == True:
+            self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
             self.d_time += frame_time
             if self.d_time >= 0.7:
                 self.life_flag = False

@@ -33,7 +33,7 @@ class Character:
         self.fy = 0
         self.speed = 0
         #능력치
-        self.att = 1
+        self.att = 10
         self.life = 5
         #
         self.life_time = 0.0

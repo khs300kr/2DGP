@@ -55,7 +55,6 @@ class Sheep:
 
     def update(self, frame_time):
         self.total_frames += Sheep.FRAMES_PER_ACTION * Sheep.ACTION_PER_TIME * frame_time
-        self.total_die += Sheep.FRAMES_PER_DIE * Sheep.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 3
         self.die_frame = int(self.total_die) % 5
 
@@ -74,14 +73,15 @@ class Sheep:
             self.frame_die = 0
 
         if self.b_hit == True:
-            self.h_time += 0.1
-            if self.h_time >= 2:
+            self.h_time += frame_time
+            if self.h_time >= 0.3:
                self.h_time = 0
                self.b_hit = False
 
         if self.b_die == True:
-            self.d_time += 0.1
-            if self.d_time >= 3.8:
+            self.d_time += frame_time
+            self.total_die += Sheep.FRAMES_PER_DIE * Sheep.ACTION_PER_TIME * frame_time
+            if self.d_time >= 0.8:
                 self.life_flag = False
                 self.d_time = 0
 

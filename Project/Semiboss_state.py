@@ -31,11 +31,10 @@ def create_world():
     bullets = list()
 
 def destroy_world():
-    global character, floor, background,semiboss
+    global character, floor, background
     del(character)
     del(floor)
     del(background)
-    del(semiboss)
 
 
 def shooting():
@@ -115,6 +114,8 @@ def portal_collide(a,b):
     return True
 
 def update(frame_time):
+    global semiboss
+
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
@@ -149,12 +150,17 @@ def update(frame_time):
                     bullets.remove(bullet)
                 if mush.hp <= 0:
                     mush.death()
-                    # semiboss
+
+    # 준보스와 총알 충돌
         if collide(semiboss,bullet):
             semiboss.hurt(character.att)
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-
+            if semiboss.hp <= 0:
+                #semiboss.death()
+                del semiboss
+            #if semiboss.life_flag == False:
+            #    pass
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
@@ -173,6 +179,7 @@ def update(frame_time):
 
 
 def draw(frame_time):
+    global semiboss
     clear_canvas()
     background.draw()
     floor.draw()
