@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 150.0                    # Km / Hour
+    RUN_SPEED_KMPH = 120.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -33,7 +33,7 @@ class Character:
         self.fy = 0
         self.speed = 0
         #능력치
-        self.att = 10
+        self.att = 1
         self.life = 5
         #
         self.life_time = 0.0

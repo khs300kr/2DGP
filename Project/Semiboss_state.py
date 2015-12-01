@@ -9,6 +9,7 @@ from Character import *
 from Semiboss_monster import *
 from Semiboss_map import *
 from Bullet import *
+from Time import *
 
 character = None
 floor = None
@@ -16,9 +17,10 @@ background = None
 bullets = None
 mushs = None
 semiboses = list()
+time = None
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses
+    global character, floor, background, bullets, mushs, semiboses, time
     character = Character()
     character.life = temp.character_life
     mushs = create_mush();
@@ -32,13 +34,14 @@ def create_world():
     for mush in mushs:
         mush.set_floor(floor)
     bullets = list()
+    time = Time()
 
 def destroy_world():
-    global character, floor, background
+    global character, floor, background, time
     del(character)
     del(floor)
     del(background)
-
+    del(time)
 
 def shooting():
     global bullets
@@ -120,6 +123,7 @@ def update(frame_time):
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
+    time.update(frame_time)
 
     # 캐릭터와 맵 충돌.
     if collide(character,floor) and stagecc_collide(character,floor): #b,c
@@ -196,6 +200,7 @@ def draw(frame_time):
     floor.draw_bb()
     character.draw()
     character.draw_bb()
+    time.draw()
 
     for semiboss in semiboses:
         semiboss.draw()
