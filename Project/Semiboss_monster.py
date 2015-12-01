@@ -14,6 +14,7 @@ class Semi:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 6
     FRAMES_PER_DIE = 12
+    FRAMES_PER_SUMMON = 15
 
     image = None
     hit = None
@@ -32,7 +33,6 @@ class Semi:
         self.hp = 10
         self.total_frames = random.randint(0,6)
         self.frame = 0
-        self.total_die = 0.0
         #hit
         self.h_time = 0
         self.b_hit = False
@@ -42,24 +42,27 @@ class Semi:
         self.b_die = False
         self.die_frame = 0
         self.frame_die = 0
+        self.total_die = 0.0
         #summon
         self.s_time = 0
         self.summon_frame = 0
         self.b_summon = False
+        self.total_summon = 0.0
 
         if Semi.image == None:
             Semi.image = load_image('Resource/Monster/Semi/semi_stand.png')
         if Semi.hit == None:
             Semi.hit = load_image('Resource/Monster/Semi/semi_hit.png')
-        #if Semi.summon == None:
-        #   Semi.summon = load_image('Resource/Monster/Semi/semi.summon.png')
+        if Semi.summon == None:
+            Semi.summon = load_image('Resource/Monster/Semi/semi_summon.png')
         if Semi.die == None:
-           Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
+            Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 6
         self.die_frame = int(self.total_die) % 12
+        self.summon_frame = int(self.total_summon) % 15
 
         if self.b_hit == True:
             self.h_time += frame_time
@@ -68,12 +71,19 @@ class Semi:
                self.b_hit = False
 
         if self.b_die == True:
-            self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
+            self.total_die += Semi.FRAMES_PER_DIE * Semi.ACTION_PER_TIME * frame_time
             self.d_time += frame_time
             if self.d_time >= 3.2:
                 self.life_flag = False
                 print("False")
                 self.d_time = 0
+
+        if self.b_summon == True:
+            self.total_summon += Semi.FRAMES_PER_SUMMON * Semi.ACTION_PER_TIME * frame_time
+            self.s_time += frame_time
+            if self.s_time >= 3.2:
+                self.b_summon = 0
+                self.b_summon = False
 
     def hurt(self,att):
         self.b_hit = True
@@ -83,6 +93,9 @@ class Semi:
     def death(self):
         self.b_die = True
 
+    def summonning(self):
+        self.b_summon = True
+
     def draw(self):
         sx = self.x - self.fl.left
 
@@ -90,6 +103,9 @@ class Semi:
             self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
         elif self.b_die == True:
             self.die.clip_draw(self.die_frame * 200, 0 ,200,200,sx,self.y)
+        elif self.b_summon == True:
+            self.summon.clip_draw(self.summon_frame * 225 , 0 , 225 , 200 ,sx, self.y)
+            pass
         else:
             self.image.clip_draw(self.frame * 100,0, 100, 130, sx, self.y)
 
@@ -103,13 +119,8 @@ class Semi:
     def set_floor(self,fl):
         self.fl = fl
 
-    def summon(self):
-
-
 
 #######################################################################################################################
-
-
 
 class Mush:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm

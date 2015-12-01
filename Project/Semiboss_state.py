@@ -18,22 +18,31 @@ bullets = None
 mushs = None
 semiboses = list()
 time = None
+bsummon = False
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses, time
+    global character, floor, background, bullets, mushs, semiboses, time , bsummon
+    # 캐릭터
     character = Character()
     character.life = temp.character_life
-    mushs = create_mush();
+    #배경
     floor = Floor()
     background = Background(1024,600)
+    #준보스
     semiboses.append(Semi())
     for semiboss in semiboses:
         semiboss.set_floor(floor)
+    # 스크롤링
     floor.set_center_object(character)
     character.set_floor(floor)
-    for mush in mushs:
-        mush.set_floor(floor)
+    #
+    if bsummon == True:
+        mushs = create_mush();
+        for mush in mushs:
+            mush.set_floor(floor)
+    #총알
     bullets = list()
+    #시간
     time = Time()
 
 def destroy_world():
@@ -137,13 +146,14 @@ def update(frame_time):
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
     # 몬스터와 캐릭터 충돌.
-    for mush in mushs:
-        mush.update(frame_time)
-        if character.b_death == False and character.b_respawn == False and mush.b_die == False:
-            if collide(character,mush):
-                character.die()
-        if mush.life_flag == False:
-            mushs.remove(mush)
+    if bsummon == True:
+        for mush in mushs:
+            mush.update(frame_time)
+            if character.b_death == False and character.b_respawn == False and mush.b_die == False:
+                if collide(character,mush):
+                    character.die()
+            if mush.life_flag == False:
+                mushs.remove(mush)
     # semiboss 캐릭터 충돌
     for semiboss in semiboses:
         semiboss.update(frame_time)
@@ -190,10 +200,18 @@ def update(frame_time):
     else:
         floor.out_portal()
 
+    global bsummon
+
+    if int(time.time % 5) == 0:
+        semiboss.summonning()
+        bsummon = True
+        print(bsummon)
+
     delay(0.009)
 
 
 def draw(frame_time):
+    global bsummon
     clear_canvas()
     background.draw()
     floor.draw()
@@ -206,9 +224,10 @@ def draw(frame_time):
         semiboss.draw()
         semiboss.draw_bb()
 
-    for mush in mushs:
-        mush.draw()
-        mush.draw_bb()
+    if bsummon == True:
+        for mush in mushs:
+            mush.draw()
+            mush.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
