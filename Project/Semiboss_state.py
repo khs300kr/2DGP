@@ -18,10 +18,9 @@ bullets = None
 mushs = None
 semiboses = list()
 time = None
-bsummon = False
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses, time , bsummon
+    global character, floor, background, bullets, mushs, semiboses, time
     # 캐릭터
     character = Character()
     character.life = temp.character_life
@@ -36,10 +35,9 @@ def create_world():
     floor.set_center_object(character)
     character.set_floor(floor)
     #
-    if bsummon == True:
-        mushs = create_mush();
-        for mush in mushs:
-            mush.set_floor(floor)
+    mushs = create_mush();
+    for mush in mushs:
+        mush.set_floor(floor)
     #총알
     bullets = list()
     #시간
@@ -146,8 +144,8 @@ def update(frame_time):
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
     # 몬스터와 캐릭터 충돌.
-    if bsummon == True:
-        for mush in mushs:
+
+    for mush in mushs:
             mush.update(frame_time)
             if character.b_death == False and character.b_respawn == False and mush.b_die == False:
                 if collide(character,mush):
@@ -200,12 +198,8 @@ def update(frame_time):
     else:
         floor.out_portal()
 
-    global bsummon
-
     if int(time.time % 5) == 0:
         semiboss.summonning()
-        bsummon = True
-        print(bsummon)
 
     delay(0.009)
 
@@ -224,10 +218,9 @@ def draw(frame_time):
         semiboss.draw()
         semiboss.draw_bb()
 
-    if bsummon == True:
-        for mush in mushs:
-            mush.draw()
-            mush.draw_bb()
+    for mush in mushs:
+        mush.draw()
+        mush.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
