@@ -160,6 +160,10 @@ def update(frame_time):
                 character.die()
         if semiboss.life_flag == False:
             semiboses.remove(semiboss)
+        else:
+            if int(time.time % 5) == 0:
+                semiboss.summonning()
+
 
     # 몬스터와 총알 충돌
     for bullet in bullets:
@@ -198,9 +202,6 @@ def update(frame_time):
     else:
         floor.out_portal()
 
-    if int(time.time % 5) == 0:
-        semiboss.summonning()
-
     delay(0.009)
 
 
@@ -226,4 +227,3 @@ def draw(frame_time):
         bullet.draw()
         bullet.draw_bb()
     update_canvas()
-

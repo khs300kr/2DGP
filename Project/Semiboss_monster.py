@@ -10,7 +10,7 @@ class Semi:
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
-    TIME_PER_ACTION = 0.8
+    TIME_PER_ACTION = 1.5
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 6
     FRAMES_PER_DIE = 12
@@ -73,7 +73,7 @@ class Semi:
         if self.b_die == True:
             self.total_die += Semi.FRAMES_PER_DIE * Semi.ACTION_PER_TIME * frame_time
             self.d_time += frame_time
-            if self.d_time >= 3.2:
+            if self.d_time >= 1.5:
                 self.life_flag = False
                 print("False")
                 self.d_time = 0
@@ -81,7 +81,7 @@ class Semi:
         if self.b_summon == True:
             self.total_summon += Semi.FRAMES_PER_SUMMON * Semi.ACTION_PER_TIME * frame_time
             self.s_time += frame_time
-            if self.s_time >= 3.2:
+            if self.s_time >= 1.6:
                 self.b_summon = 0
                 self.b_summon = False
 
