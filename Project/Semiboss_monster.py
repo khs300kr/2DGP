@@ -99,8 +99,6 @@ class Semi:
             if self.skill_time >= 0.7:
                 self.b_skill = False
                 self.skill_time = 0
-                print(self.skill_time)
-                print(self.b_skill)
 
     def hurt(self,att):
         self.b_hit = True
@@ -124,15 +122,24 @@ class Semi:
             self.summon.clip_draw(self.summon_frame * 225 , 0 , 225 , 200 ,sx, self.y)
         else:
             self.image.clip_draw(self.frame * 100,0, 100, 130, sx, self.y)
+
         if self.b_skill == True:
             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 100,280)
+            self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 200,280)
 
     def get_bb(self):
         sx = self.x - self.fl.left
         return sx - 45, self.y - 60, sx + 35, self.y + 30
 
+    def get_skill(self):
+        if self.b_skill == True:
+            sx = self.x - self.fl.left
+            return sx - 150 , self.y-60 , sx + 0,self.y
+
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
+        if self.b_skill == True:
+            draw_rectangle(*self.get_skill())
 
     def set_floor(self,fl):
         self.fl = fl

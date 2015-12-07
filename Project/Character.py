@@ -21,6 +21,7 @@ class Character:
     hp_title = None
     death = None
     respawn = None
+    death_screnn = None
 
 
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
@@ -70,6 +71,8 @@ class Character:
             Character.death = load_image("Resource/Ui/Death.png")
         if Character.respawn == None:
             Character.respawn = load_image("Resource/Effect/respawn.png")
+        if Character.death_screnn == None:
+            Character.death_screnn = load_image("Resource/Ui/die.png")
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
@@ -105,7 +108,7 @@ class Character:
         if self.b_respawn == True:
             self.respawn_frame = int(self.total_frames) % 7
             self.r_time += frame_time
-            if self.r_time >= 1.6:
+            if self.r_time >= 5.5:
                 self.r_time = 0
                 self.b_respawn = False
 
@@ -125,6 +128,7 @@ class Character:
             self.attack.clip_draw(0,self.frame_attack * 100 , 100 ,100 ,self.canvas_width//2+x_offset, self.y)
         elif self.b_death == True:
             self.death.clip_draw(0,0,101,47,self.canvas_width//2+x_offset - 15 ,self.y - 28)
+            self.death_screnn.draw(512,300)
         else:
             self.image.clip_draw(self.frame * 100, self.state * 125, 100, 100, self.canvas_width//2+x_offset,
                                  self.y)
