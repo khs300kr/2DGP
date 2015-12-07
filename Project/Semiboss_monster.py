@@ -2,7 +2,6 @@ from pico2d import*
 import random
 import json
 
-
 class Semi:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 30 cm
     RUN_SPEED_KMPH = 30.0                    # Km / Hour
@@ -15,11 +14,13 @@ class Semi:
     FRAMES_PER_ACTION = 6
     FRAMES_PER_DIE = 12
     FRAMES_PER_SUMMON = 15
+    FRAMES_PER_SKILL = 8
 
     image = None
     hit = None
     die = None
     summon = None
+    skill = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -48,6 +49,11 @@ class Semi:
         self.summon_frame = 0
         self.b_summon = False
         self.total_summon = 0.0
+        #skill
+        self.skill_time = 0
+        self.skill_frame = 0
+        self.b_skill = False
+        self.total_skill = 0.0
 
         if Semi.image == None:
             Semi.image = load_image('Resource/Monster/Semi/semi_stand.png')
@@ -57,12 +63,15 @@ class Semi:
             Semi.summon = load_image('Resource/Monster/Semi/semi_summon.png')
         if Semi.die == None:
             Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
+        if Semi.skill == None:
+            Semi.skill = load_image("Resource/Monster/Semi/summon_skill.png")
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 6
         self.die_frame = int(self.total_die) % 12
         self.summon_frame = int(self.total_summon) % 15
+        self.skill_frame = int(self.total_skill) % 8
 
         if self.b_hit == True:
             self.h_time += frame_time
@@ -75,15 +84,23 @@ class Semi:
             self.d_time += frame_time
             if self.d_time >= 1.5:
                 self.life_flag = False
-                print("False")
                 self.d_time = 0
 
         if self.b_summon == True:
             self.total_summon += Semi.FRAMES_PER_SUMMON * Semi.ACTION_PER_TIME * frame_time
             self.s_time += frame_time
             if self.s_time >= 1.6:
-                self.b_summon = 0
                 self.b_summon = False
+                self.s_time = 0
+
+        if self.b_skill == True:
+            self.total_skill += Semi.FRAMES_PER_SKILL * Semi.ACTION_PER_TIME* frame_time
+            self.skill_time += frame_time
+            if self.skill_time >= 0.7:
+                self.b_skill = False
+                self.skill_time = 0
+                print(self.skill_time)
+                print(self.b_skill)
 
     def hurt(self,att):
         self.b_hit = True
@@ -95,19 +112,20 @@ class Semi:
 
     def summonning(self):
         self.b_summon = True
+        self.b_skill = True
 
     def draw(self):
         sx = self.x - self.fl.left
-
         if self.b_hit == True:
             self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
         elif self.b_die == True:
             self.die.clip_draw(self.die_frame * 200, 0 ,200,200,sx,self.y)
         elif self.b_summon == True:
             self.summon.clip_draw(self.summon_frame * 225 , 0 , 225 , 200 ,sx, self.y)
-            pass
         else:
             self.image.clip_draw(self.frame * 100,0, 100, 130, sx, self.y)
+        if self.b_skill == True:
+            self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 100,280)
 
     def get_bb(self):
         sx = self.x - self.fl.left
@@ -234,12 +252,14 @@ class Mush:
     def set_floor(self,fl):
         self.fl = fl
 
+#######################################################################################################################
+
 
 def create_mush():
     team_data_text = '\
 {\
-    "Mush1" : {"StartState":"L_WALK", "x":400, "y":90, "min":0, "max":500},\
-	"Mush2"    : {"StartState":"L_WALK", "x":500, "y":90, "min":0, "max":500},\
+    "Mush1" : {"StartState":"L_WALK", "x":500, "y":90, "min":0, "max":500},\
+	"Mush2"    : {"StartState":"L_WALK", "x":600, "y":90, "min":0, "max":500},\
 	"Mush3"   : {"StartState":"R_WALK", "x":800, "y":210, "min":600, "max":1500},\
 	"Mush4"    : {"StartState":"L_WALK", "x":900, "y":210, "min":600, "max":1500},\
 	"Mush5"   : {"StartState":"R_WALK", "x":1000, "y":210, "min":600, "max":1500},\

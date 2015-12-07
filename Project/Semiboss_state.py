@@ -19,6 +19,7 @@ mushs = None
 semiboses = list()
 time = None
 
+
 def create_world():
     global character, floor, background, bullets, mushs, semiboses, time
     # 캐릭터
@@ -34,7 +35,7 @@ def create_world():
     # 스크롤링
     floor.set_center_object(character)
     character.set_floor(floor)
-    #
+    # 몬스터
     mushs = create_mush();
     for mush in mushs:
         mush.set_floor(floor)
@@ -53,7 +54,6 @@ def destroy_world():
 def shooting():
     global bullets
     bullets.append(Bullet(character.x,character.y,character.state,floor))
-
 
 def enter():
     create_world()
@@ -144,7 +144,6 @@ def update(frame_time):
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
     # 몬스터와 캐릭터 충돌.
-
     for mush in mushs:
             mush.update(frame_time)
             if character.b_death == False and character.b_respawn == False and mush.b_die == False:

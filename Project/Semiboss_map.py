@@ -88,7 +88,6 @@ class Floor:
         sx = self.x - self.left
         return 600 + sx,0,sx + 1500,170
     def get_portal(self):
-        pass
         sx = self.x - self.left
         return 3745 + sx,160, 3800 + sx , 185
 
