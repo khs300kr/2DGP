@@ -14,13 +14,15 @@ class Semi:
     FRAMES_PER_ACTION = 6
     FRAMES_PER_DIE = 12
     FRAMES_PER_SUMMON = 15
-    FRAMES_PER_SKILL = 8
+    FRAMES_PER_SKILL = 12
+    SKILL_PER_TIME = 1.0 / 2.5
 
     image = None
     hit = None
     die = None
     summon = None
     skill = None
+    shadow = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -53,6 +55,8 @@ class Semi:
         self.skill_time = 0
         self.skill_frame = 0
         self.b_skill = False
+        self.b_skill1 = False
+        self.b_patt = False
         self.total_skill = 0.0
 
         if Semi.image == None:
@@ -65,6 +69,8 @@ class Semi:
             Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
         if Semi.skill == None:
             Semi.skill = load_image("Resource/Monster/Semi/summon_skill.png")
+        if Semi.shadow == None:
+            Semi.shadow = load_image("Resource/Effect/shadow.png")
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
@@ -89,16 +95,23 @@ class Semi:
         if self.b_summon == True:
             self.total_summon += Semi.FRAMES_PER_SUMMON * Semi.ACTION_PER_TIME * frame_time
             self.s_time += frame_time
-            if self.s_time >= 1.6:
+            if self.s_time >= 1.5:
                 self.b_summon = False
                 self.s_time = 0
 
         if self.b_skill == True:
-            self.total_skill += Semi.FRAMES_PER_SKILL * Semi.ACTION_PER_TIME* frame_time
+            self.total_skill += Semi.FRAMES_PER_SKILL * Semi.SKILL_PER_TIME* frame_time
             self.skill_time += frame_time
-            if self.skill_time >= 0.7:
+            if self.skill_time >= 1.7:
                 self.b_skill = False
                 self.skill_time = 0
+        if self.b_skill1 == True:
+            self.total_skill += Semi.FRAMES_PER_SKILL * Semi.SKILL_PER_TIME* frame_time
+            self.skill_time += frame_time
+            if self.skill_time >= 1.7:
+                self.b_skill1 = False
+                self.skill_time = 0
+
 
     def hurt(self,att):
         self.b_hit = True
@@ -111,6 +124,9 @@ class Semi:
     def summonning(self):
         self.b_summon = True
         self.b_skill = True
+    def summonning1(self):
+        self.b_summon = True
+        self.b_skill1 = True
 
     def draw(self):
         sx = self.x - self.fl.left
@@ -124,22 +140,67 @@ class Semi:
             self.image.clip_draw(self.frame * 100,0, 100, 130, sx, self.y)
 
         if self.b_skill == True:
-            self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 100,280)
-            self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 200,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 100,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 300,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 500,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 640,220)
+        if self.b_skill1 == True:
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 200,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 400,280)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 740,150)
+             self.skill.clip_draw(self.skill_frame * 200, 0,200,278,sx - 940,150)
 
     def get_bb(self):
         sx = self.x - self.fl.left
         return sx - 45, self.y - 60, sx + 35, self.y + 30
 
-    def get_skill(self):
-        if self.b_skill == True:
-            sx = self.x - self.fl.left
-            return sx - 150 , self.y-60 , sx + 0,self.y
+    def get_skill_1(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 100, self.y-60 , sx + 25 - 100, self.y + 40
+    def get_skill_2(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 300, self.y-60 , sx + 25 - 300, self.y + 40
+    def get_skill_3(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 500, self.y-60 , sx + 25 - 500, self.y + 40
+    def get_skill_4(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 640, self.y-60 - 50 , sx + 25 - 640, self.y - 50 + 40
+    def get_skill_5(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 200, self.y-60 , sx + 25 - 200, self.y + 40
+    def get_skill_6(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 400, self.y-60 , sx + 25 - 400, self.y + 40
+    def get_skill_7(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 740, self.y-60 - 130 , sx + 25 - 740, self.y - 130 + 40
+    def get_skill_8(self):
+        sx = self.x - self.fl.left
+        if self.skill_time >= 0.65:
+            return sx - 25 - 940, self.y-60 - 130 , sx + 25 - 940, self.y - 130 + 40
 
     def draw_bb(self):
         draw_rectangle(*self.get_bb())
         if self.b_skill == True:
-            draw_rectangle(*self.get_skill())
+            if self.skill_time >= 0.65:
+                draw_rectangle(*self.get_skill_1())
+                draw_rectangle(*self.get_skill_2())
+                draw_rectangle(*self.get_skill_3())
+                draw_rectangle(*self.get_skill_4())
+        if self.b_skill1 == True:
+            if self.skill_time >= 0.65:
+                draw_rectangle(*self.get_skill_5())
+                draw_rectangle(*self.get_skill_6())
+                draw_rectangle(*self.get_skill_7())
+                draw_rectangle(*self.get_skill_8())
 
     def set_floor(self,fl):
         self.fl = fl

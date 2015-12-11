@@ -19,7 +19,6 @@ mushs = None
 semiboses = list()
 time = None
 
-
 def create_world():
     global character, floor, background, bullets, mushs, semiboses, time
     # 캐릭터
@@ -125,6 +124,71 @@ def portal_collide(a,b):
     if top_a < bottom_b : return False
     if bottom_a > top_b : return False
     return True
+def skill1_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_1()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill2_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_2()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill3_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_3()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill4_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_4()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill5_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_5()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill6_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_6()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill7_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_7()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+def skill8_collide(a,b):
+    left_a,bottom_a,right_a,top_a = a.get_bb()
+    left_b,bottom_b,right_b,top_b = b.get_skill_8()
+    if left_a > right_b : return False
+    if right_a < left_b : return False
+    if top_a < bottom_b : return False
+    if bottom_a > top_b : return False
+    return True
+
 
 def update(frame_time):
     background.update(frame_time)
@@ -143,6 +207,7 @@ def update(frame_time):
         character.semiboss_collidecc()
     elif stagedd_collide(character,floor): #d
         character.semiboss_collidedd()
+
     # 몬스터와 캐릭터 충돌.
     for mush in mushs:
             mush.update(frame_time)
@@ -157,12 +222,33 @@ def update(frame_time):
         if character.b_death == False and character.b_respawn == False and semiboss.b_die == False:
             if collide(character,semiboss):
                 character.die()
+            if semiboss.b_skill == True:
+                if semiboss.skill_time >= 0.65:
+                    if skill1_collide(character,semiboss):
+                        character.die()
+                    if skill2_collide(character,semiboss):
+                        character.die()
+                    if skill3_collide(character,semiboss):
+                        character.die()
+                    if skill4_collide(character,semiboss):
+                        character.die()
+            if semiboss.b_skill1 == True:
+                if semiboss.skill_time >= 0.65:
+                    if skill5_collide(character,semiboss):
+                        character.die()
+                    if skill6_collide(character,semiboss):
+                        character.die()
+                    if skill7_collide(character,semiboss):
+                        character.die()
+                    if skill8_collide(character,semiboss):
+                        character.die()
         if semiboss.life_flag == False:
             semiboses.remove(semiboss)
         else:
-            if int(time.time % 5) == 0:
+            if int(time.time % 10) == 0:
                 semiboss.summonning()
-
+            if int(time.time % 10) == 5:
+                semiboss.summonning1()
 
     # 몬스터와 총알 충돌
     for bullet in bullets:
@@ -209,20 +295,20 @@ def draw(frame_time):
     clear_canvas()
     background.draw()
     floor.draw()
-    floor.draw_bb()
+    #floor.draw_bb()
     character.draw()
-    character.draw_bb()
+    #character.draw_bb()
     time.draw()
 
     for semiboss in semiboses:
         semiboss.draw()
-        semiboss.draw_bb()
+        #semiboss.draw_bb()
 
     for mush in mushs:
         mush.draw()
-        mush.draw_bb()
+        #mush.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
-        bullet.draw_bb()
+        #bullet.draw_bb()
     update_canvas()
