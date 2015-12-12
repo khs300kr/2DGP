@@ -6,26 +6,33 @@ from Character import *
 from Monster import *
 from Stage import *
 from Bullet import *
+from Item import *
 
 character = None
 floor = None
 background = None
 bullets = None
 yangs = None
+skills = None
+skillcol = False
+items = list()
 
 
 def create_world():
-    global character, floor, background, bullets , yangs
+    global character, floor, background, bullets , yangs , items, skills
     character = Character()
     yangs = create_sheep();
     floor = Floor()
+    items.append(Item())
+    for item in items:
+        item.set_floor(floor)
     background = Background(1024,600)
-
     floor.set_center_object(character)
     character.set_floor(floor)
     for yang in yangs:
         yang.set_floor(floor)
     bullets = list()
+    skills = list()
 
 def destroy_world():
     global character, floor, background
@@ -37,6 +44,11 @@ def destroy_world():
 def shooting():
     global bullets
     bullets.append(Bullet(character.x,character.y,character.state,floor))
+
+def skilling():
+    global skills,skillcol
+    skills.append(Skill(character.x,character.y,character.state,floor))
+    skillcol = True
 
 
 def enter():
@@ -66,15 +78,19 @@ def handle_events(frame_time):
             elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_UP):
                 if floor.portal_flag == True:
                     temp.character_life = character.life
-
+                    temp.character_skill = character.skill
                     game_framework.change_state(Semiboss_state)
-
                 else:
                     pass
             else:
                 character.handle_event(event)
                 if character.b_attack == True:
                     shooting()
+                if character.skill > 0 :
+                    if character.b_skill == True:
+                        if skillcol == False:
+                            skilling()
+                            character.skilldown()
                 background.handle_event(event)
                 floor.handle_event(event)
 
@@ -129,6 +145,7 @@ def portal_collide(a,b):
     return True
 
 def update(frame_time):
+    global skillcol
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
@@ -152,6 +169,13 @@ def update(frame_time):
     elif stageff_collide(character,floor): #f
         character.floor_collideff()
 
+    for item in items:
+        item.update(frame_time)
+        if item.b_die == True:
+            if collide(character,item):
+                items.remove(item)
+                character.skillup()
+
     for yang in yangs:
         yang.update(frame_time)
         if character.b_death == False and character.b_respawn == False and yang.b_die == False :
@@ -160,8 +184,40 @@ def update(frame_time):
         if yang.life_flag == False:
             yangs.remove(yang)
 
+    # 몬스터와 스킬 충돌
+    for skill in skills:
+        skill.update(frame_time)
+        for yang in yangs:
+            if yang.b_die == False:
+                if collide(yang,skill):
+                    yang.hurt(character.att + 9)
+                    skill.hits()
+                    if skill.b_hit == False:
+                        if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                            skills.remove(skill)
+                    if yang.hp <= 0:
+                        yang.death()
+    # 스킬 사정거리 설정
+        if skill.sx >= skill.canvas_width:
+            if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                skills.remove(skill)
+                skillcol = False
+                print("스킬 갯수 = %d" %(skills.count(skill)))
+        if skill.x <= 0:
+            if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                skills.remove(skill)
+                skillcol = False
+                print("스킬 갯수 = %d" %(skills.count(skill)))
     for bullet in bullets:
         bullet.update(frame_time)
+        for item in items:
+            if item.b_die == False:
+                if collide(item,bullet):
+                    item.hurt(character.att)
+                    if bullets.count(bullet) > 0:
+                        bullets.remove(bullet)
+                        if item.hp <= 0:
+                            item.death()
         for yang in yangs:
             if yang.b_die == False:
                 if collide(yang,bullet):
@@ -192,16 +248,23 @@ def draw(frame_time):
     clear_canvas()
     background.draw()
     floor.draw()
-    floor.draw_bb()
+    #floor.draw_bb()
     character.draw()
-    character.draw_bb()
+    #character.draw_bb()
+    for item in items:
+        item.draw()
+        #item.draw_bb()
 
     for yang in yangs:
         yang.draw()
-        yang.draw_bb()
+        #yang.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
-        bullet.draw_bb()
+        #bullet.draw_bb()
+
+    for skill in skills:
+        skill.draw()
+        #skill.draw_bb()
     update_canvas()
 

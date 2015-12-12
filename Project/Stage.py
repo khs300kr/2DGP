@@ -41,6 +41,7 @@ class Floor:
 
     image = None
     portal = None
+    item = None
 
     def __init__(self):
         if Floor.image == None:
@@ -66,7 +67,6 @@ class Floor:
         sx = self.x - self.left
         self.image.clip_draw_to_origin(self.left,0,self.canvas_width ,self.canvas_height,0,0)
         self.portal.clip_draw(self.frame * 125,0,125,75,sx + 3775,185)
-
     def update(self,frame_time):
         self.total_frames += Floor.FRAMES_PER_ACTION * Floor.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 5

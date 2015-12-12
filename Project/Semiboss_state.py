@@ -28,6 +28,7 @@ def create_world():
     # 캐릭터
     character = Character()
     character.life = temp.character_life
+    character.skill = temp.character_skill
     #배경
     floor = Floor()
     background = Background(1024,600)
@@ -99,9 +100,11 @@ def handle_events(frame_time):
                 character.handle_event(event)
                 if character.b_attack == True:
                     shooting()
-                if character.b_skill == True:
-                    if skillcol == False:
-                        skilling()
+                if character.skill > 0 :
+                    if character.b_skill == True:
+                        if skillcol == False:
+                            skilling()
+                            character.skilldown()
                 background.handle_event(event)
                 floor.handle_event(event)
 
@@ -360,9 +363,9 @@ def draw(frame_time):
 
     for bullet in bullets:
         bullet.draw()
-        bullet.draw_bb()
+        #bullet.draw_bb()
 
     for skill in skills:
         skill.draw()
-        skill.draw_bb()
+        #skill.draw_bb()
     update_canvas()

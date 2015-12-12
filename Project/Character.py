@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 20.0                    # Km / Hour
+    RUN_SPEED_KMPH = 130.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -19,6 +19,8 @@ class Character:
     attack = None
     hp = None
     hp_title = None
+    skill_cell = None
+    skill_title = None
     death = None
     respawn = None
     death_screnn = None
@@ -36,6 +38,7 @@ class Character:
         #능력치
         self.att = 1
         self.life = 5
+        self.skill = 0
         #
         self.life_time = 0.0
         self.total_frames = 0.0
@@ -74,6 +77,10 @@ class Character:
             Character.respawn = load_image("Resource/Effect/respawn.png")
         if Character.death_screnn == None:
             Character.death_screnn = load_image("Resource/Ui/die.png")
+        if Character.skill_title == None:
+            Character.skill_title = load_image("Resource/Ui/Skill_Title.png")
+        if Character.skill_cell == None:
+            Character.skill_cell = load_image("Resource/Ui/skill_cell.png")
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
@@ -122,6 +129,8 @@ class Character:
 
         self.hp_title.clip_draw(0,0,244,35,150,550)
         self.hp.clip_draw(0 ,0,self.life * 30 , 25 , 150 , 550)
+        self.skill_title.clip_draw(0,0,150,35,850,550)
+        self.skill_cell.clip_draw(0,0,self.skill * 30,30,840,550)
 
         if self.b_jump == True:
             self.jump.clip_draw(0,self.frame_jump * 100, 100, 100, self.canvas_width//2+x_offset,self.y)
@@ -195,6 +204,11 @@ class Character:
     def die(self):
         self.life -= 1
         self.b_death = True
+
+    def skillup(self):
+        self.skill = 3
+    def skilldown(self):
+        self.skill -= 1
 
     def set_floor(self,fl):
         self.fl = fl

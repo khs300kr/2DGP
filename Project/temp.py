@@ -5,12 +5,13 @@ from pico2d import *
 
 init = None
 character_life = 0
-
+character_skill = 0
 
 def enter():
-    global character_life
+    global character_life,character_skill
     if init == None:
         character_life = 5
+        character_skill = 0
 
 
 def exit():
