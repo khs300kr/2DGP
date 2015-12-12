@@ -23,6 +23,8 @@ class Semi:
     summon = None
     skill = None
     shadow = None
+    hp_bar = None
+    hp_cell = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -33,7 +35,7 @@ class Semi:
         self.max = 0
         self.life_flag = True
         # 능력치
-        self.hp = 10
+        self.hp = 200
         self.total_frames = random.randint(0,6)
         self.frame = 0
         #hit
@@ -71,6 +73,10 @@ class Semi:
             Semi.skill = load_image("Resource/Monster/Semi/summon_skill.png")
         if Semi.shadow == None:
             Semi.shadow = load_image("Resource/Effect/shadow.png")
+        if Semi.hp_bar == None:
+            Semi.hp_bar = load_image("Resource/Ui/Boss_Hp.png")
+        if Semi.hp_cell == None:
+            Semi.hp_cell = load_image("Resource/Ui/Boss_Cell.png")
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
@@ -130,6 +136,9 @@ class Semi:
 
     def draw(self):
         sx = self.x - self.fl.left
+        self.hp_bar.clip_draw(0,0,404,29,512,500)
+        for i in range(0,self.hp):
+            self.hp_cell.clip_draw(0,0,2,25,412-99+(i*2),500)
         if self.b_hit == True:
             self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
         elif self.b_die == True:
@@ -328,10 +337,10 @@ def create_mush():
 {\
     "Mush1" : {"StartState":"L_WALK", "x":500, "y":90, "min":0, "max":500},\
 	"Mush2"    : {"StartState":"L_WALK", "x":600, "y":90, "min":0, "max":500},\
-	"Mush3"   : {"StartState":"R_WALK", "x":800, "y":210, "min":600, "max":1500},\
-	"Mush4"    : {"StartState":"L_WALK", "x":900, "y":210, "min":600, "max":1500},\
-	"Mush5"   : {"StartState":"R_WALK", "x":1000, "y":210, "min":600, "max":1500},\
-	"Mush6"   : {"StartState":"L_WALK", "x":1100, "y":210, "min":600, "max":1500}\
+	"Mush3"   : {"StartState":"R_WALK", "x":800, "y":210, "min":630, "max":1500},\
+	"Mush4"    : {"StartState":"L_WALK", "x":900, "y":210, "min":630, "max":1500},\
+	"Mush5"   : {"StartState":"R_WALK", "x":1000, "y":210, "min":630, "max":1500},\
+	"Mush6"   : {"StartState":"L_WALK", "x":1100, "y":210, "min":630, "max":1500}\
 }\
 '
 

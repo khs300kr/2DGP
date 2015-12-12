@@ -15,12 +15,16 @@ character = None
 floor = None
 background = None
 bullets = None
+skills = None
+skillcol = False
 mushs = None
 semiboses = list()
+semialive = True
 time = None
 
+
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses, time
+    global character, floor, background, bullets, mushs, semiboses, time, skills
     # 캐릭터
     character = Character()
     character.life = temp.character_life
@@ -40,6 +44,8 @@ def create_world():
         mush.set_floor(floor)
     #총알
     bullets = list()
+    #스킬
+    skills = list()
     #시간
     time = Time()
 
@@ -53,6 +59,11 @@ def destroy_world():
 def shooting():
     global bullets
     bullets.append(Bullet(character.x,character.y,character.state,floor))
+
+def skilling():
+    global skills,skillcol
+    skills.append(Skill(character.x,character.y,character.state,floor))
+    skillcol = True
 
 def enter():
     create_world()
@@ -88,6 +99,9 @@ def handle_events(frame_time):
                 character.handle_event(event)
                 if character.b_attack == True:
                     shooting()
+                if character.b_skill == True:
+                    if skillcol == False:
+                        skilling()
                 background.handle_event(event)
                 floor.handle_event(event)
 
@@ -191,6 +205,7 @@ def skill8_collide(a,b):
 
 
 def update(frame_time):
+    global semialive,skillcol
     background.update(frame_time)
     floor.update(frame_time)
     character.update(frame_time)
@@ -244,12 +259,48 @@ def update(frame_time):
                         character.die()
         if semiboss.life_flag == False:
             semiboses.remove(semiboss)
+            semialive = False
         else:
             if int(time.time % 10) == 0:
                 semiboss.summonning()
             if int(time.time % 10) == 5:
                 semiboss.summonning1()
 
+    # 몬스터와 스킬 충돌
+    for skill in skills:
+        skill.update(frame_time)
+        for mush in mushs:
+            if mush.b_die == False:
+                if collide(mush,skill):
+                    mush.hurt(character.att + 9)
+                    skill.hits()
+                    if skill.b_hit == False:
+                        if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                            skills.remove(skill)
+                    if mush.hp <= 0:
+                        mush.death()
+    # 준보스와 스킬 충돌
+        for semiboss in semiboses:
+            if semiboss.b_die == False:
+                if collide(semiboss,skill):
+                    semiboss.hurt(1)
+                    skill.hits()
+                    if skill.b_hit == False:
+                        if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                            skills.remove(skill)
+                    if semiboss.hp <= 0:
+                        semiboss.death()
+    # 스킬 사정거리 설정
+        if skill.sx >= skill.canvas_width:
+            if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                skills.remove(skill)
+                skillcol = False
+                print("스킬 갯수 = %d" %(skills.count(skill)))
+        if skill.x <= 0:
+            if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
+                skills.remove(skill)
+                skillcol = False
+                print("스킬 갯수 = %d" %(skills.count(skill)))
     # 몬스터와 총알 충돌
     for bullet in bullets:
         bullet.update(frame_time)
@@ -261,7 +312,6 @@ def update(frame_time):
                         bullets.remove(bullet)
                     if mush.hp <= 0:
                         mush.death()
-
     # 준보스와 총알 충돌
         for semiboss in semiboses:
             if semiboss.b_die == False:
@@ -271,7 +321,6 @@ def update(frame_time):
                         bullets.remove(bullet)
                     if semiboss.hp <= 0:
                         semiboss.death()
-
     # 총알 화면밖 나갈시 삭제
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
@@ -287,18 +336,19 @@ def update(frame_time):
     else:
         floor.out_portal()
 
-    delay(0.009)
-
+    if semialive == True:
+        delay(0.006)
+    else:
+        delay(0.009)
 
 def draw(frame_time):
-    global bsummon
     clear_canvas()
     background.draw()
     floor.draw()
     #floor.draw_bb()
     character.draw()
     #character.draw_bb()
-    time.draw()
+    #time.draw()
 
     for semiboss in semiboses:
         semiboss.draw()
@@ -310,5 +360,9 @@ def draw(frame_time):
 
     for bullet in bullets:
         bullet.draw()
-        #bullet.draw_bb()
+        bullet.draw_bb()
+
+    for skill in skills:
+        skill.draw()
+        skill.draw_bb()
     update_canvas()

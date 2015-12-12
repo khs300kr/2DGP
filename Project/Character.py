@@ -49,6 +49,7 @@ class Character:
         #attack
         self.a_time = 0
         self.b_attack = False
+        self.b_skill = False
         self.frame_attack = 0
         #death
         self.b_death = False
@@ -170,10 +171,16 @@ class Character:
                     self.b_death = False
                 else:
                     self.b_attack = True
-
         elif (event.type,event.key) == (SDL_KEYUP,SDLK_x):
                 self.b_attack = False
 
+        elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_z):
+                if self.b_death == True: # 부활
+                    pass
+                else:
+                    self.b_skill = True
+        elif (event.type,event.key) == (SDL_KEYUP,SDLK_z):
+                self.b_skill = False
 
     def get_bb(self):
         x_left_offset = min(0,self.x-self.canvas_width//2)
