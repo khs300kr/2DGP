@@ -3,6 +3,7 @@ import json
 import os
 import temp
 import game_framework
+import gameover_state
 from pico2d import *
 
 from Character import *
@@ -339,8 +340,11 @@ def update(frame_time):
     else:
         floor.out_portal()
 
+    if character.life < 0:
+        game_framework.change_state(gameover_state)
+
     if semialive == True:
-        delay(0.006)
+        delay(0.008)
     else:
         delay(0.009)
 
@@ -355,7 +359,7 @@ def draw(frame_time):
 
     for semiboss in semiboses:
         semiboss.draw()
-        #semiboss.draw_bb()
+        semiboss.draw_bb()
 
     for mush in mushs:
         mush.draw()

@@ -65,7 +65,7 @@ class Bullet:
 
 class Skill:
     PIXEL_PER_METER = (10.0 / 0.3 )         # 10 pixel 30cm
-    BULLET_SPEED_KMPH = 60.0                   # km / Hour
+    BULLET_SPEED_KMPH = 30.0                   # km / Hour
     BULLET_SPEED_MPM = (BULLET_SPEED_KMPH * 1000.0 / 60.0)
     BULLET_SPEED_MPS = (BULLET_SPEED_MPM / 60.0)
     BULLET_SPEED_PPS = (BULLET_SPEED_MPS * PIXEL_PER_METER)

@@ -1,7 +1,7 @@
 import game_framework
 import Semiboss_state
+import gameover_state
 import temp
-
 from Character import *
 from Monster import *
 from Stage import *
@@ -240,6 +240,9 @@ def update(frame_time):
         floor.check_portal()
     else:
         floor.out_portal()
+
+    if character.life < 0:
+        game_framework.change_state(gameover_state)
 
     delay(0.009)
 

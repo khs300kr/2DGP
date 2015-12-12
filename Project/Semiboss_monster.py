@@ -15,7 +15,7 @@ class Semi:
     FRAMES_PER_DIE = 12
     FRAMES_PER_SUMMON = 15
     FRAMES_PER_SKILL = 12
-    SKILL_PER_TIME = 1.0 / 2.0
+    SKILL_PER_TIME = 1.0 / 1.5
 
     image = None
     hit = None
@@ -35,7 +35,7 @@ class Semi:
         self.max = 0
         self.life_flag = True
         # 능력치
-        self.hp = 400
+        self.hp = 200
         self.total_frames = random.randint(0,6)
         self.frame = 0
         #hit
@@ -83,7 +83,7 @@ class Semi:
         self.frame = int(self.total_frames) % 6
         self.die_frame = int(self.total_die) % 12
         self.summon_frame = int(self.total_summon) % 15
-        self.skill_frame = int(self.total_skill) % 8
+        self.skill_frame = int(self.total_skill) % 12
 
         if self.b_hit == True:
             self.h_time += frame_time
@@ -108,16 +108,18 @@ class Semi:
         if self.b_skill == True:
             self.total_skill += Semi.FRAMES_PER_SKILL * Semi.SKILL_PER_TIME* frame_time
             self.skill_time += frame_time
-            if self.skill_time >= 1.415:
-                self.b_skill = False
+            if self.skill_time >= 1.5:
+                self.total_skill = 0
                 self.skill_time = 0
+                self.b_skill = False
 
         if self.b_skill1 == True:
             self.total_skill += Semi.FRAMES_PER_SKILL * Semi.SKILL_PER_TIME* frame_time
             self.skill_time += frame_time
-            if self.skill_time >= 1.415:
-                self.b_skill1 = False
+            if self.skill_time >= 1.5:
+                self.total_skill = 0
                 self.skill_time = 0
+                self.b_skill1 = False
 
 
     def hurt(self,att):
@@ -139,7 +141,7 @@ class Semi:
         sx = self.x - self.fl.left
         self.hp_bar.clip_draw(0,0,404,29,512,500)
         for i in range(0,self.hp):
-            self.hp_cell.clip_draw(0,0,2,25,412-99+(i),500)
+            self.hp_cell.clip_draw(0,0,2,25,412-99+(i*2),500)
         if self.b_hit == True:
             self.hit.clip_draw(0,self.frame_hit * 130 ,110,130,sx,self.y)
         elif self.b_die == True:
@@ -298,8 +300,8 @@ class Mush:
             self.total_die += Mush.FRAMES_PER_DIE * Mush.ACTION_PER_TIME * frame_time
             self.d_time += frame_time
             if self.d_time >= 0.7:
-                self.life_flag = False
                 self.d_time = 0
+                self.life_flag = False
 
 
     def hurt(self,att):

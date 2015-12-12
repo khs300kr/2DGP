@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 130.0                    # Km / Hour
+    RUN_SPEED_KMPH = 30.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -24,7 +24,10 @@ class Character:
     death = None
     respawn = None
     death_screnn = None
-
+    #sound
+    jump_sound = None
+    shoot_sound = None
+    skill_sound = None
 
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
 
@@ -37,7 +40,7 @@ class Character:
         self.speed = 0
         #능력치
         self.att = 1
-        self.life = 5
+        self.life = 3
         self.skill = 0
         #
         self.life_time = 0.0
@@ -81,6 +84,17 @@ class Character:
             Character.skill_title = load_image("Resource/Ui/Skill_Title.png")
         if Character.skill_cell == None:
             Character.skill_cell = load_image("Resource/Ui/skill_cell.png")
+        # sound
+        if Character.jump_sound == None:
+            Character.jump_sound = load_wav("Resource/Sound/jump.wav")
+            Character.jump_sound.set_volume(32)
+        if Character.shoot_sound == None:
+            Character.shoot_sound = load_wav("Resource/Sound/shoot.wav")
+            Character.shoot_sound.set_volume(32)
+        if Character.skill_sound == None:
+            Character.skill_sound = load_wav("Resource/Sound/skill.wav")
+            Character.skill_sound.set_volume(32)
+
 
     def update(self, frame_time):
         def clamp(minimum, x, maximum):
@@ -174,12 +188,14 @@ class Character:
                     self.b_death = False
                 else:
                     self.b_jump = True
+                    self.jump_sound.play()
         elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_x):
                 if self.b_death == True: # 부활
                     self.b_respawn = True
                     self.b_death = False
                 else:
                     self.b_attack = True
+                    self.shoot_sound.play()
         elif (event.type,event.key) == (SDL_KEYUP,SDLK_x):
                 self.b_attack = False
 
