@@ -16,10 +16,10 @@ yangs = None
 skills = None
 skillcol = False
 items = list()
-
+bgm_sound = None
 
 def create_world():
-    global character, floor, background, bullets , yangs , items, skills
+    global character, floor, background, bullets , yangs , items, skills,bgm_sound
     character = Character()
     yangs = create_sheep();
     floor = Floor()
@@ -33,6 +33,10 @@ def create_world():
         yang.set_floor(floor)
     bullets = list()
     skills = list()
+    if bgm_sound == None:
+        bgm_sound = load_music("Resource/Sound/stage_1.mp3")
+        bgm_sound.set_volume(64)
+        bgm_sound.repeat_play()
 
 def destroy_world():
     global character, floor, background
@@ -174,6 +178,7 @@ def update(frame_time):
         if item.b_die == True:
             if collide(character,item):
                 items.remove(item)
+                item.eat()
                 character.skillup()
 
     for yang in yangs:
@@ -241,7 +246,7 @@ def update(frame_time):
     else:
         floor.out_portal()
 
-    if character.life < 0:
+    if character.life < 1:
         game_framework.change_state(gameover_state)
 
     delay(0.009)

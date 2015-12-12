@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 30.0                    # Km / Hour
+    RUN_SPEED_KMPH = 130.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -28,6 +28,8 @@ class Character:
     jump_sound = None
     shoot_sound = None
     skill_sound = None
+    die_sound = None
+    respawn_sound = None
 
     R_STAND, R_WALK, L_STAND, L_WALK = 0, 1, 2, 3
 
@@ -39,7 +41,7 @@ class Character:
         self.fy = 0
         self.speed = 0
         #능력치
-        self.att = 1
+        self.att = 100
         self.life = 3
         self.skill = 0
         #
@@ -87,13 +89,20 @@ class Character:
         # sound
         if Character.jump_sound == None:
             Character.jump_sound = load_wav("Resource/Sound/jump.wav")
-            Character.jump_sound.set_volume(32)
+            Character.jump_sound.set_volume(62)
         if Character.shoot_sound == None:
             Character.shoot_sound = load_wav("Resource/Sound/shoot.wav")
             Character.shoot_sound.set_volume(32)
         if Character.skill_sound == None:
             Character.skill_sound = load_wav("Resource/Sound/skill.wav")
             Character.skill_sound.set_volume(32)
+        if Character.die_sound == None:
+            Character.die_sound = load_wav("Resource/Sound/character_die.wav")
+            Character.die_sound.set_volume(32)
+        if Character.respawn_sound == None:
+            Character.respawn_sound = load_wav("Resource/Sound/character_respawn.wav")
+            Character.respawn_sound.set_volume(32)
+
 
 
     def update(self, frame_time):
@@ -186,6 +195,7 @@ class Character:
                 if self.b_death == True:  #부활
                     self.b_respawn = True
                     self.b_death = False
+                    self.respawn_sound.play()
                 else:
                     self.b_jump = True
                     self.jump_sound.play()
@@ -193,6 +203,7 @@ class Character:
                 if self.b_death == True: # 부활
                     self.b_respawn = True
                     self.b_death = False
+                    self.respawn_sound.play()
                 else:
                     self.b_attack = True
                     self.shoot_sound.play()
@@ -204,6 +215,8 @@ class Character:
                     pass
                 else:
                     self.b_skill = True
+                    if self.skill > 0:
+                        self.skill_sound.play()
         elif (event.type,event.key) == (SDL_KEYUP,SDLK_z):
                 self.b_skill = False
 
@@ -220,6 +233,7 @@ class Character:
     def die(self):
         self.life -= 1
         self.b_death = True
+        self.die_sound.play()
 
     def skillup(self):
         self.skill = 3

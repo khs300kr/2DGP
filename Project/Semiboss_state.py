@@ -22,10 +22,11 @@ mushs = None
 semiboses = list()
 semialive = True
 time = None
+semi_sound = None
 
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses, time, skills
+    global character, floor, background, bullets, mushs, semiboses, time, skills, semi_sound
     # 캐릭터
     character = Character()
     character.life = temp.character_life
@@ -50,7 +51,10 @@ def create_world():
     skills = list()
     #시간
     time = Time()
-
+    #사운드
+    semi_sound = load_music("Resource/Sound/semi_stage.mp3")
+    semi_sound.set_volume(64)
+    semi_sound.repeat_play()
 def destroy_world():
     global character, floor, background, time
     del(character)
@@ -93,8 +97,9 @@ def handle_events(frame_time):
                 game_framework.quit()
             elif (event.type,event.key) == (SDL_KEYDOWN,SDLK_UP):
                 if floor.portal_flag == True:
-                    pass
-                    #game_framework.change_state(title_state)
+                    temp.character_life = character.life
+                    temp.character_skill = character.skill
+                    game_framework.change_state(gameover_state)
                 else:
                     pass
             else:
@@ -340,8 +345,8 @@ def update(frame_time):
     else:
         floor.out_portal()
 
-    if character.life < 0:
-        game_framework.change_state(gameover_state)
+    if character.life < 1:
+        pass#game_framework.change_state(gameover_state)
 
     if semialive == True:
         delay(0.008)
@@ -352,7 +357,7 @@ def draw(frame_time):
     clear_canvas()
     background.draw()
     floor.draw()
-    #floor.draw_bb()
+    floor.draw_bb()
     character.draw()
     #character.draw_bb()
     #time.draw()

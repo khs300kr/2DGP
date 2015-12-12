@@ -8,6 +8,9 @@ class Item:
     box = None
     slot = None
     hit = None
+    #sound
+    hit_sound = None
+    eat_sound = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -30,6 +33,11 @@ class Item:
             Item.slot = load_image('Resource/Item/item.png')
         if Item.hit == None:
             Item.hit = load_image('Resource/Item/box_hit.png')
+        if Item.hit_sound == None:
+            Item.hit_sound = load_wav("Resource/Sound/box_hits.wav")
+        if Item.eat_sound == None:
+            Item.eat_sound = load_wav("Resource/Sound/item_bite.wav")
+            Item.eat_sound.set_volume(80)
 
     def update(self, frame_time):
         self.total_frames += Item.FRAMES_PER_ACTION * Item.ACTION_PER_TIME * frame_time
@@ -43,6 +51,7 @@ class Item:
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
+        Item.hit_sound.play()
         print("박스 hp = %d" %(self.hp))
 
     def death(self):
@@ -71,3 +80,6 @@ class Item:
 
     def set_floor(self,fl):
         self.fl = fl
+
+    def eat(self):
+        Item.eat_sound.play()

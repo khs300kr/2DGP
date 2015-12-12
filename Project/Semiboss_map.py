@@ -65,7 +65,7 @@ class Floor:
     def draw(self):
         sx = self.x - self.left
         self.image.clip_draw_to_origin(self.left,0,self.canvas_width ,self.canvas_height,0,0)
-        self.portal.clip_draw(self.frame * 125,0,125,75,sx + 3775,185)
+        self.portal.clip_draw(self.frame * 125,0,125,75,sx + 1385,205)
 
     def update(self,frame_time):
         self.total_frames += Floor.FRAMES_PER_ACTION * Floor.ACTION_PER_TIME * frame_time
@@ -76,7 +76,7 @@ class Floor:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_cc())
         draw_rectangle(*self.get_dd())
-        #draw_rectangle(*self.get_portal())
+        draw_rectangle(*self.get_portal())
 
     def get_bb(self):
         sx = self.x - self.left
@@ -89,7 +89,7 @@ class Floor:
         return 600 + sx,0,sx + 1500,170
     def get_portal(self):
         sx = self.x - self.left
-        return 3745 + sx,160, 3800 + sx , 185
+        return 1355 + sx,180, 1410 + sx , 205
 
     def handle_event(self, event):
         pass

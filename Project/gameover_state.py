@@ -9,14 +9,21 @@ import Character
 init = None
 name = "gameover_state"
 image = None
+gameover_sound = None
 character_hp = 0
 
 
 def enter():
-    global image,character_hp
-    image = load_image('Resource/State/gameover.png')
+    global image,character_hp, gameover_sound
+    if image == None:
+        image = load_image('Resource/State/gameover.png')
     if init == None:
         character_hp = 0
+    gameover_sound = load_music("Resource/Sound/gameover.mp3")
+    gameover_sound.set_volume(64)
+    gameover_sound.play()
+
+
 
 
 def exit():

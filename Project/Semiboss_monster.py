@@ -25,6 +25,9 @@ class Semi:
     shadow = None
     hp_bar = None
     hp_cell = None
+    # sound
+    hit_sound = None
+    die_sound = None
 
     def __init__(self):
         self.canvas_width = get_canvas_width()
@@ -77,6 +80,13 @@ class Semi:
             Semi.hp_bar = load_image("Resource/Ui/Boss_Hp.png")
         if Semi.hp_cell == None:
             Semi.hp_cell = load_image("Resource/Ui/Boss_Cell.png")
+        # sound
+        if Semi.hit_sound == None:
+            Semi.hit_sound = load_wav("Resource/Sound/hit.wav")
+            Semi.hit_sound.set_volume(32)
+        if Semi.die_sound == None:
+            Semi.die_sound = load_wav("Resource/Sound/yang_death.wav")
+            Semi.die_sound.set_volume(32)
 
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
@@ -125,14 +135,17 @@ class Semi:
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
+        self.hit_sound.play()
         print("Semi hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True
+        self.die_sound.play()
 
     def summonning(self):
         self.b_summon = True
         self.b_skill = True
+
     def summonning1(self):
         self.b_summon = True
         self.b_skill1 = True
@@ -235,6 +248,9 @@ class Mush:
     image = None
     hit = None
     die = None
+    #sound
+    hit_sound = None
+    die_sound = None
 
     L_WALK,R_WALK = 0, 1
 
@@ -264,13 +280,20 @@ class Mush:
         self.die_frame = 0
         self.frame_die = 0
 
+
         if Mush.image == None:
             Mush.image = load_image('Resource/Monster/Mush/mush_run.png')
         if Mush.hit == None:
             Mush.hit = load_image('Resource/Monster/Mush/mush_hit.png')
         if Mush.die == None:
             Mush.die = load_image('Resource/Monster/Mush/mush_die.png')
-
+        #sound
+        if Mush.hit_sound == None:
+            Mush.hit_sound = load_wav("Resource/Sound/hit.wav")
+            Mush.hit_sound.set_volume(32)
+        if Mush.die_sound == None:
+            Mush.die_sound = load_wav("Resource/Sound/yang_death.wav")
+            Mush.die_sound.set_volume(32)
     def update(self, frame_time):
         self.total_frames += Mush.FRAMES_PER_ACTION * Mush.ACTION_PER_TIME * frame_time
         self.frame = int(self.total_frames) % 4
@@ -307,10 +330,12 @@ class Mush:
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
+        self.hit_sound.play()
         print("몬스터 hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True
+        self.die_sound.play()
 
     def draw(self):
         sx = self.x - self.fl.left

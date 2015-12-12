@@ -17,6 +17,9 @@ class Sheep:
     image = None
     hit = None
     die = None
+    #sound
+    hit_sound = None
+    die_sound = None
 
     L_WALK,R_WALK = 0, 1
 
@@ -52,6 +55,13 @@ class Sheep:
             Sheep.hit = load_image('Resource/Monster/Sheep/sheep_hit.png')
         if Sheep.die == None:
             Sheep.die = load_image('Resource/Monster/Sheep/sheep_die.png')
+        #sound
+        if Sheep.hit_sound == None:
+            Sheep.hit_sound = load_wav("Resource/Sound/hit.wav")
+            Sheep.hit_sound.set_volume(32)
+        if Sheep.die_sound == None:
+            Sheep.die_sound = load_wav("Resource/Sound/yang_death.wav")
+            Sheep.die_sound.set_volume(32)
 
     def update(self, frame_time):
         self.total_frames += Sheep.FRAMES_PER_ACTION * Sheep.ACTION_PER_TIME * frame_time
@@ -89,10 +99,12 @@ class Sheep:
     def hurt(self,att):
         self.b_hit = True
         self.hp -= att
+        self.hit_sound.play()
         print("몬스터 hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True
+        self.die_sound.play()
 
     def draw(self):
         sx = self.x - self.fl.left

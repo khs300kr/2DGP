@@ -7,7 +7,8 @@ class Background:
     SCROLL_SPEED_MPM = (SCROLL_SPEED_KMPH * 1000.0 / 60.0)
     SCROLL_SPEED_MPS = (SCROLL_SPEED_MPM / 60.0)
     SCROLL_SPEED_PPS = (SCROLL_SPEED_MPS * PIXEL_PER_METER)
-    
+
+
     def __init__(self,w,h):
         self.image = load_image('Resource/Map/Background.png')
         self.speed = 0
@@ -15,6 +16,7 @@ class Background:
         self.height = 95
         self.screen_width = w
         self.screen_height = h
+
 
     def draw(self):
         x = int(self.left)
@@ -43,11 +45,13 @@ class Floor:
     portal = None
     item = None
 
+
     def __init__(self):
         if Floor.image == None:
             self.image = load_image('Resource/Map/Stage1.png')
         if Floor.portal == None:
             self.portal = load_image("Resource/Map/portal.png")
+
         self.speed = 0
         self.left = 0
         self.x = 0
