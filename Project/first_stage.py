@@ -207,12 +207,10 @@ def update(frame_time):
             if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 skills.remove(skill)
                 skillcol = False
-                print("스킬 갯수 = %d" %(skills.count(skill)))
         if skill.x <= 0:
             if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 skills.remove(skill)
                 skillcol = False
-                print("스킬 갯수 = %d" %(skills.count(skill)))
     for bullet in bullets:
         bullet.update(frame_time)
         for item in items:
@@ -235,11 +233,9 @@ def update(frame_time):
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-                print("총알 갯수 = %d" %(bullets.count(bullet)))
         if bullet.x <= 0:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-                print("총알 갯수 = %d" %(bullets.count(bullet)))
 
     if portal_collide(character,floor):
         floor.check_portal()
@@ -261,7 +257,6 @@ def draw(frame_time):
     #character.draw_bb()
     for item in items:
         item.draw()
-        #item.draw_bb()
 
     for yang in yangs:
         yang.draw()

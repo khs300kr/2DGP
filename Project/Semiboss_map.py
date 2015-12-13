@@ -58,6 +58,7 @@ class Floor:
         self.h = self.image.h
         self.height = 95
         self.portal_flag = False
+        self.bsemi = True
 
     def set_center_object(self, character):
         self.set_center_object = character
@@ -65,7 +66,8 @@ class Floor:
     def draw(self):
         sx = self.x - self.left
         self.image.clip_draw_to_origin(self.left,0,self.canvas_width ,self.canvas_height,0,0)
-        self.portal.clip_draw(self.frame * 125,0,125,75,sx + 1385,205)
+        if self.bsemi == False:
+            self.portal.clip_draw(self.frame * 125,0,125,75,sx + 1385,205)
 
     def update(self,frame_time):
         self.total_frames += Floor.FRAMES_PER_ACTION * Floor.ACTION_PER_TIME * frame_time
@@ -76,7 +78,8 @@ class Floor:
         draw_rectangle(*self.get_bb())
         draw_rectangle(*self.get_cc())
         draw_rectangle(*self.get_dd())
-        draw_rectangle(*self.get_portal())
+        if self.bsemi == False:
+            draw_rectangle(*self.get_portal())
 
     def get_bb(self):
         sx = self.x - self.left
@@ -99,3 +102,6 @@ class Floor:
 
     def out_portal(self):
         self.portal_flag = False
+
+    def portal_open(self):
+        self.bsemi =False

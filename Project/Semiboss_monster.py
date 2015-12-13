@@ -22,7 +22,6 @@ class Semi:
     die = None
     summon = None
     skill = None
-    shadow = None
     hp_bar = None
     hp_cell = None
     # sound
@@ -74,8 +73,6 @@ class Semi:
             Semi.die = load_image('Resource/Monster/Semi/semi_die.png')
         if Semi.skill == None:
             Semi.skill = load_image("Resource/Monster/Semi/summon_skill.png")
-        if Semi.shadow == None:
-            Semi.shadow = load_image("Resource/Effect/shadow.png")
         if Semi.hp_bar == None:
             Semi.hp_bar = load_image("Resource/Ui/Boss_Hp.png")
         if Semi.hp_cell == None:
@@ -136,7 +133,6 @@ class Semi:
         self.b_hit = True
         self.hp -= att
         self.hit_sound.play()
-        print("Semi hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True
@@ -331,7 +327,6 @@ class Mush:
         self.b_hit = True
         self.hp -= att
         self.hit_sound.play()
-        print("몬스터 hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True

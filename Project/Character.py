@@ -4,7 +4,7 @@ from Bullet import *
 
 class Character:
     PIXEL_PER_METER = (10.0 / 0.3)           # 10 pixel 100 cm
-    RUN_SPEED_KMPH = 130.0                    # Km / Hour
+    RUN_SPEED_KMPH = 30.0                    # Km / Hour
     RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
     RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
     RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
@@ -41,8 +41,8 @@ class Character:
         self.fy = 0
         self.speed = 0
         #능력치
-        self.att = 100
-        self.life = 3
+        self.att = 1
+        self.life = 5
         self.skill = 0
         #
         self.life_time = 0.0
@@ -278,7 +278,7 @@ class Character:
             self.x -= (self.dir * self.speed)
 
 
-        #semibos 충돌
+    #semibos 충돌
     def semiboss_collidebb(self):
         self.y = 50 + 50
         self.fy = 50 + 50
@@ -298,3 +298,8 @@ class Character:
         self.fy = 110 + 50
         if self.state in (self.R_WALK,):
             self.x -= (self.dir * self.speed)
+
+    #semibos 충돌
+    def final_collidebb(self):
+        self.y = 50 + 50
+        self.fy = 50 + 50

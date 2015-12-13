@@ -4,6 +4,7 @@ import os
 import temp
 import game_framework
 import gameover_state
+import Final_state
 from pico2d import *
 
 from Character import *
@@ -11,6 +12,7 @@ from Semiboss_monster import *
 from Semiboss_map import *
 from Bullet import *
 from Time import *
+from Item import *
 
 character = None
 floor = None
@@ -23,10 +25,12 @@ semiboses = list()
 semialive = True
 time = None
 semi_sound = None
+items = list()
+
 
 
 def create_world():
-    global character, floor, background, bullets, mushs, semiboses, time, skills, semi_sound
+    global character, floor, bullets, mushs, semiboses, time, skills, semi_sound, items,background
     # 캐릭터
     character = Character()
     character.life = temp.character_life
@@ -52,11 +56,15 @@ def create_world():
     #시간
     time = Time()
     #사운드
-    semi_sound = load_music("Resource/Sound/semi_stage.mp3")
-    semi_sound.set_volume(64)
+    semi_sound = load_music("Resource/Sound/stage_2.mp3")
+    semi_sound.set_volume(48)
     semi_sound.repeat_play()
+    # item
+    items.append(Item())
+    for item in items:
+        item.set_floor(floor)
 def destroy_world():
-    global character, floor, background, time
+    global character, floor, time,background
     del(character)
     del(floor)
     del(background)
@@ -99,7 +107,7 @@ def handle_events(frame_time):
                 if floor.portal_flag == True:
                     temp.character_life = character.life
                     temp.character_skill = character.skill
-                    game_framework.change_state(gameover_state)
+                    game_framework.change_state(Final_state)
                 else:
                     pass
             else:
@@ -113,7 +121,6 @@ def handle_events(frame_time):
                             character.skilldown()
                 background.handle_event(event)
                 floor.handle_event(event)
-
 
 def collide(a,b):
     left_a,bottom_a,right_a,top_a = a.get_bb()
@@ -219,6 +226,14 @@ def update(frame_time):
     floor.update(frame_time)
     character.update(frame_time)
     time.update(frame_time)
+    # item
+    for item in items:
+        item.update(frame_time)
+        if item.b_die == True:
+            if stagecc_collide(character,item):
+                items.remove(item)
+                item.eat()
+                character.skillup()
 
     # 캐릭터와 맵 충돌.
     if collide(character,floor) and stagecc_collide(character,floor): #b,c
@@ -269,6 +284,9 @@ def update(frame_time):
         if semiboss.life_flag == False:
             semiboses.remove(semiboss)
             semialive = False
+            floor.portal_open()
+            for item in items:
+                item.place_item()
         else:
             if int(time.time % 10) == 0:
                 semiboss.summonning()
@@ -304,15 +322,22 @@ def update(frame_time):
             if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 skills.remove(skill)
                 skillcol = False
-                print("스킬 갯수 = %d" %(skills.count(skill)))
         if skill.x <= 0:
             if skills.count(skill) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 skills.remove(skill)
                 skillcol = False
-                print("스킬 갯수 = %d" %(skills.count(skill)))
     # 몬스터와 총알 충돌
     for bullet in bullets:
         bullet.update(frame_time)
+        for item in items:
+            if item.b_die == False:
+                if semialive == False:
+                    if stagecc_collide(bullet,item):
+                        item.hurt(character.att)
+                        if bullets.count(bullet) > 0:
+                            bullets.remove(bullet)
+                            if item.hp <= 0:
+                                item.death()
         for mush in mushs:
             if mush.b_die == False:
                 if collide(mush,bullet):
@@ -334,11 +359,9 @@ def update(frame_time):
         if bullet.sx >= bullet.canvas_width:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-                print("총알 갯수 = %d" %(bullets.count(bullet)))
         if bullet.x <= 0:
             if bullets.count(bullet) > 0:   # 0 이하로 떨어질때 지우는거 버그 수정
                 bullets.remove(bullet)
-                print("총알 갯수 = %d" %(bullets.count(bullet)))
 
     if portal_collide(character,floor):
         floor.check_portal()
@@ -346,7 +369,7 @@ def update(frame_time):
         floor.out_portal()
 
     if character.life < 1:
-        pass#game_framework.change_state(gameover_state)
+        game_framework.change_state(gameover_state)
 
     if semialive == True:
         delay(0.008)
@@ -357,24 +380,22 @@ def draw(frame_time):
     clear_canvas()
     background.draw()
     floor.draw()
-    floor.draw_bb()
     character.draw()
     #character.draw_bb()
     #time.draw()
 
+    for item in items:
+        item.draw_semi()
+
     for semiboss in semiboses:
         semiboss.draw()
-        semiboss.draw_bb()
 
     for mush in mushs:
         mush.draw()
-        #mush.draw_bb()
 
     for bullet in bullets:
         bullet.draw()
-        #bullet.draw_bb()
 
     for skill in skills:
         skill.draw()
-        #skill.draw_bb()
     update_canvas()

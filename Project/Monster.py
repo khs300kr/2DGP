@@ -100,7 +100,6 @@ class Sheep:
         self.b_hit = True
         self.hp -= att
         self.hit_sound.play()
-        print("몬스터 hp = %d" %(self.hp))
 
     def death(self):
         self.b_die = True
